@@ -1,0 +1,1813 @@
+<!-- <div *ngIf="colaborador"> -->
+
+<form style="background: #00D8D6; background: linear-gradient(to right, #00D8D6, #6EC1E4);" #myForm="ngForm">
+  <ngb-toast-container></ngb-toast-container>
+  <mat-tab-group mat-align-tabs="center" [selectedIndex]="selected.value"
+    (selectedIndexChange)="selected.setValue($event)">
+    <mat-tab label="General">
+      <div class="container mt-5 bg-white rounded-top shadow">
+        <h4 class="pt-4 pb-1">Información General</h4>
+        <div class="row">
+          <div class="col">
+            <label for="nombre" class="form-label">Nombre(s)<span class="text-danger"> *</span></label>
+            <input type="text" class="form-control valGlobal" id="nombre" name="nombre" ngModel #nombre="ngModel"
+              [(ngModel)]="colaborador.nombre" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+">
+            <!-- <input type="text" class="form-control valGlobal" id="nombre" name="nombre" ngModel #nombre="ngModel"
+              [(ngModel)]="colaborador.nombre" pattern="[a-zA-Z ]*" required> -->
+            <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="alert">
+              <!-- <div *ngIf="nombre.errors?.required">
+                  El nombre es obligatorio.
+                </div> -->
+              <div *ngIf="nombre.errors?.pattern">
+                El nombre solo debe de contener letras y/o espacios.
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <label for="paterno" class="form-label">Apellido Paterno<span class="text-danger"> *</span></label>
+            <input type="text" class="form-control valGlobal" id="apaterno" name="apaterno" ngModel #apaterno="ngModel"
+              [(ngModel)]="colaborador.a_paterno" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+">
+            <!-- <input type="text" class="form-control valGlobal" id="apaterno" name="apaterno" ngModel #apaterno="ngModel"
+              [(ngModel)]="colaborador.a_paterno" pattern="[a-zA-Z ]*" required> -->
+            <div *ngIf="apaterno.invalid && (apaterno.dirty || apaterno.touched)" class="alert">
+              <!-- <div *ngIf="apaterno.errors?.required">
+                  El apellido es obligatorio.
+                </div> -->
+              <div *ngIf="apaterno.errors?.pattern">
+                El apellido solo debe de contener letras y/o espacios.
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <label for="materno" class="form-label">Apellido Materno<span class="text-danger"> *</span></label>
+            <input type="text" class="form-control" id="amaterno" name="amaterno" ngModel #amaterno="ngModel"
+              [(ngModel)]="colaborador.a_materno" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+">
+            <!-- <input type="text" class="form-control" id="amaterno" name="amaterno" ngModel #amaterno="ngModel"
+              [(ngModel)]="colaborador.a_materno" pattern="[a-zA-Z ]*" required> -->
+            <div *ngIf="amaterno.invalid && (amaterno.dirty || amaterno.touched)" class="alert">
+              <!-- <div *ngIf="amaterno.errors?.required">
+                  El apellido es obligatorio.
+                </div> -->
+              <div *ngIf="amaterno.errors?.pattern">
+                El apellido solo debe de contener letras y/o espacios.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col">
+            <label for="rfc" class="form-label">RFC</label>
+            <input maxlength="13" size="13" type="text" class="form-control" name="rfc" placeholder="" value="" ngModel
+              #rfc="ngModel" [(ngModel)]="colaborador.rfc">
+          </div>
+
+          <div class="col">
+            <label for="curp" class="form-label">CURP</label>
+            <input maxlength="18" minlength="18" size="18" type="text" class="form-control" id="curp" name="curp" placeholder="" value="" ngModel
+              #curp="ngModel" [(ngModel)]="colaborador.curp" (change)="onCurp()" required>
+              <div *ngIf="curp.invalid && (curp.dirty || curp.touched)" class="alert">
+                <div *ngIf="curp.errors?.required">
+                    El CURP es obligatorio.
+                </div>
+                  <div *ngIf="!curp.errors?.required && curp.errors?.minlength">
+                    El CURP debe contener 18 digitos.
+                  </div>
+              </div>
+              <div *ngIf="curpExiste" class="alertCurp">
+                El CURP ya existe
+              </div>
+          </div>
+
+          <div class="col">
+            <label for="nss" class="form-label">NSS</label>
+            <input maxlength="11" size="11" type="text" class="form-control" name="nss" ngModel #nss="ngModel"
+              [(ngModel)]="colaborador.nss">
+          </div>
+
+          <div class="col">
+            <label for="identificacionF" class="form-label"
+              *ngIf="!archivosDescargaIne1; else descargarArchivoIne1">Identificación (Frontal)<span
+                class="text-danger">
+                *</span></label>
+            <ng-template #descargarArchivoIne1>
+              <label for="identificacionF" class="form-label">Cambiar Identificación (Frontal)<span class="text-danger">
+                  *</span></label>
+            </ng-template>
+            <input class="form-control-file" type="file" name="identificacionF" accept=".png, .jpg, .jpeg"
+              (change)="ineFrontal($event.target.files)" #ineUpload>
+          </div>
+          <div class="col">
+            <label for="identificacionR" class="form-label"
+              *ngIf="!archivosDescargaIne2; else descargarArchivoIne2">Identificación (Reverso)</label>
+            <ng-template #descargarArchivoIne2>
+              <label for="identificacionR" class="form-label">Cambiar Identificación (Reverso)</label>
+            </ng-template>
+            <input class="form-control-file" type="file" name="identificacionR" accept=".png, .jpg, .jpeg"
+              (change)="ineReverso($event.target.files)" #ineUpload1>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-3">
+            <label for="formFile" class="form-label" *ngIf="!archivosDescargaFoto; else descargarArchivoFoto">Foto
+              Personal</label>
+            <ng-template #descargarArchivoFoto>
+              <label for="formFile" class="form-label">Cambiar Foto Personal</label>
+            </ng-template>
+            <input class="form-control-file" type="file" id="foto" accept=".png, .jpg, .jpeg"
+              (change)="cargaFotoPersonal($event.target.files)">
+          </div>
+          <div class="col-md-2">
+            <label for="calificacion" class="form-label">Calificación<span class="text-danger"> *</span></label>
+            <select class="form-control" name="calificacion" (change)="onCalificacion($event.target.value)"
+              #calificacion="ngModel" [ngModel]="colaborador.idCalificacion" ngModel>
+              <!-- <select class="form-control" name="calificacion" (change)="onCalificacion($event.target.value)"
+            #calificacion="ngModel" [ngModel]="colaborador.idCalificacion" ngModel required> -->
+              <option value="" selected disabled hidden>Seleccionar</option>
+              <option *ngFor="let calificacion of calificaciones" [value]="calificacion.idCalificacion">
+                {{calificacion.nombre}}
+              </option>
+            </select>
+            <div *ngIf="calificacion.invalid && (calificacion.dirty || calificacion.touched)" class="alert">
+              <!-- <div *ngIf="calificacion.errors?.required">
+                La calificación es obligatoria.
+              </div> -->
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <label for="tipoColaborador" class="form-label">Tipo de Colaborador<span class="text-danger">
+                *</span></label>
+            <select class="form-control" name="tipoColaborador" (change)="onTipoColaborador($event.target.value)"
+              #tipoColaborador="ngModel" [ngModel]="colaborador.idTipoColaborador" ngModel>
+              <!-- <select class="form-control" name="tipoColaborador" (change)="onTipoColaborador($event.target.value)" #tipoColaborador="ngModel" [ngModel]="colaborador.idTipoColaborador" ngModel required> -->
+              <option value="" selected disabled hidden>Seleccionar</option>
+              <option *ngFor="let tipoColaborador of tiposColaboradores" [value]="tipoColaborador.idTipoColaborador">
+                {{tipoColaborador.nombre}}
+              </option>
+            </select>
+            <div *ngIf="tipoColaborador.invalid && (tipoColaborador.dirty || tipoColaborador.touched)" class="alert">
+              <!-- <div *ngIf="tipoColaborador.errors?.required">
+                La calificación es obligatoria.
+              </div> -->
+            </div>
+          </div>
+          <div class="col-md-5">
+            <label for="observaciones">Observaciones</label>
+            <textarea class="form-control" id="observaciones" name="observaciones" ngModel #observaciones="ngModel"
+              [(ngModel)]="colaborador.observaciones" rows="3" maxlength="255"></textarea>
+          </div>
+        </div>
+
+        <div class="btn-toolbar mt-4" role="toolbar" style="justify-content: center; display: flex;"
+          *ngIf="archivosDescargaIne1 || archivosDescargaIne2 || archivosDescargaFoto">
+          <div class="btn-group mr-2" *ngIf="archivosDescargaIne1">
+            <button type="button" class="btn btn-primary" (click)="downloadBase64FileIne1()">Descargar Identificación
+              (Frontal)</button>
+          </div>
+          <div class="btn-group mr-2" *ngIf="archivosDescargaIne2">
+            <button type="button" class="btn btn-primary" (click)="downloadBase64FileIne2()">Descargar Identificación
+              (Reverso)</button>
+          </div>
+          <div class="btn-group mr-2" *ngIf="archivosDescargaFoto">
+            <button type="button" class="btn btn-primary" (click)="downloadBase64FileFoto()">Descargar Foto
+              Personal</button>
+          </div>
+        </div>
+
+        <hr class="py-1" />
+        <h4 class="pb-1">Lugar y Fecha de Nacimiento</h4>
+        <div class="row mt-4 pb-4">
+          <div class="col">
+            <label for="nacimiento" class="form-label">Fecha de Nacimiento<span class="text-danger"> *</span></label>
+            <input type="date" class="form-control" id="fechanacimiento" name="fechanacimiento" value="yyyy-MM-dd"
+              ngModel #fechanacimiento="ngModel" [(ngModel)]="colaborador.fecha_nacimiento">
+            <!-- <input type="date" class="form-control" id="fechanacimiento" name="fechanacimiento" value="yyyy-MM-dd" ngModel
+              #fechanacimiento="ngModel" [(ngModel)]="colaborador.fecha_nacimiento" required> -->
+            <div *ngIf="fechanacimiento.invalid && (fechanacimiento.dirty || fechanacimiento.touched)" class="alert">
+              <!-- <div *ngIf="fechanacimiento.errors?.required">
+                  La fecha de nacimiento es obligatoria.
+                </div> -->
+            </div>
+
+          </div>
+          <div class="col">
+            <label for="paisNac" class="form-label">País<span class="text-danger"> *</span></label>
+            <select class="form-control" name="paisNac" ngModel #paisNac="ngModel"
+              [(ngModel)]="colaborador.idPaisNacimiento">
+              <!-- <select class="form-control" name="paisNac" ngModel
+            #paisNac="ngModel" [(ngModel)]="colaborador.idPaisNacimiento" required> -->
+              <option value="" selected disabled hidden>Seleccionar</option>
+              <option *ngFor="let pais of paises" [value]="pais.idPais">
+                {{pais.nombre}}
+              </option>
+            </select>
+            <div *ngIf="paisNac.invalid && (paisNac.dirty || paisNac.touched)" class="alert">
+              <!-- <div *ngIf="paisNac.errors?.required">
+                El país es obligatorio.
+              </div> -->
+            </div>
+          </div>
+          <div class="col">
+            <label for="estadoNac" class="form-label">Estado<span class="text-danger"> *</span></label>
+            <select class="form-control" name="estadoNac" id="estadoNac" ngModel #estadoNac="ngModel"
+              [(ngModel)]="colaborador.idEstadoNacimiento" (change)="comboCiudades($event.target.value)">
+              <!-- <select class="form-control" name="estadoNac" id="estadoNac" ngModel #estadoNac="ngModel" 
+            [(ngModel)]="colaborador.idEstadoNacimiento"
+              (change)="comboCiudades($event.target.value)" required> -->
+              <option value="" selected disabled hidden>Seleccionar</option>
+              <option *ngFor="let estado of estados" [value]="estado.idEstado">
+                {{estado.nombre}}
+              </option>
+            </select>
+            <div *ngIf="estadoNac.invalid && (estadoNac.dirty || estadoNac.touched)" class="alert">
+              <!-- <div *ngIf="estadoNac.errors?.required">
+                El estado es obligatorio.
+              </div> -->
+            </div>
+          </div>
+          <div class="col">
+            <label for="ciudadNac" class="form-label">Ciudad<span class="text-danger"> *</span></label>
+            <select class="form-control" name="ciudadNac" (change)="onCiudadNacimiento($event.target.value)"
+              #ciudadNac="ngModel" ngModel [(ngModel)]="colaborador.idCiudadNacimiento">
+              <!-- <select class="form-control" name="ciudadNac" (change)="onCiudadNacimiento($event.target.value)" #ciudadNac="ngModel"  ngModel required> -->
+              <option value="" selected disabled hidden>Seleccionar</option>
+              <option *ngFor="let ciudad of ciudades" [value]="ciudad.idCiudad">
+                {{ciudad.nombre}}
+              </option>
+            </select>
+            <div *ngIf="ciudadNac.invalid && (ciudadNac.dirty || ciudadNac.touched)" class="alert">
+              <!-- <div *ngIf="ciudadNac.errors?.required">
+                La ciudad es obligatoria.
+              </div> -->
+            </div>
+          </div>
+
+        </div>
+        <div class="row pb-4">
+          <div class="col-md-12"><span class="font-italic">Los campos con </span><span
+              class="text-danger font-italic">*</span><span class="font-italic"> son obligatorios</span></div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Dirección">
+      <div class="container mt-5 bg-white rounded-top shadow">
+        <h4 class="pt-4 pb-1">Dirección</h4>
+        <div class="row">
+          <div class="col">
+            <label for="calle" class="form-label">Calle<span class="text-danger"> *</span></label>
+            <input type="text" class="form-control" id="calle1" name="calle1" ngModel #calle1="ngModel"
+              [(ngModel)]="colaborador.calle1">
+            <!-- <input type="text" class="form-control" id="calle1" name="calle1" ngModel #calle1="ngModel" [(ngModel)]="colaborador.calle1" required> -->
+            <div *ngIf="calle1.invalid && (calle1.dirty || calle1.touched)" class="alert">
+              <!-- <div *ngIf="calle1.errors?.required">
+                La calle es obligatoria.
+              </div> -->
+            </div>
+          </div>
+
+          <div class="col">
+            <label for="calle2" class="form-label">Calle 2</label>
+            <input type="text" class="form-control" id="calle1" name="calle2" ngModel #calle2="ngModel"
+              [(ngModel)]="colaborador.calle2">
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-md-2">
+            <label for="numExterior" class="form-label">Número Exterior<span class="text-danger"> *</span></label>
+            <input type="text" class="form-control" name="numExterior" ngModel #numExterior="ngModel"
+              [(ngModel)]="colaborador.noExt">
+            <!-- <input type="text" class="form-control" name="numExterior" ngModel #numExterior="ngModel" [(ngModel)]="colaborador.noExt" required> -->
+            <div *ngIf="numExterior.invalid && (numExterior.dirty || numExterior.touched)" class="alert">
+              <!-- <div *ngIf="numExterior.errors?.required">
+                El número exterior es obligatorio.
+              </div> -->
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <label for="numInterior" class="form-label">Número Interior</label>
+            <input type="text" class="form-control" name="numInterior" ngModel #numInterior="ngModel"
+              [(ngModel)]="colaborador.noInt">
+          </div>
+
+          <div class="col-md-2">
+            <label for="codigopostal" class="form-label">Código Postal<span class="text-danger"> *</span></label>
+            <input type="text" class="form-control" maxlength="5" name="codigopostal"
+              [(ngModel)]="colaborador.codigoPostal" [ngModel]="selectedCodigoPostal"
+              (change)="onCodigoPostal($event.target.value)" ngModel #codigopostal="ngModel" pattern="[0-9]*">
+            <!-- <input type="text" class="form-control" maxlength="5" name="codigopostal"
+              [ngModel]="selectedCodigoPostal" (change)="onCodigoPostal($event.target.value)" ngModel
+              #codigopostal="ngModel" pattern="[0-9]*" required> -->
+            <div *ngIf="codigopostal.invalid && (codigopostal.dirty || codigopostal.touched)" class="alert">
+              <!-- <div *ngIf="codigopostal.errors?.required">
+                  El codigo postal es obligatorio.
+                </div> -->
+              <div *ngIf="nombre.errors?.pattern">
+                El codigo postal son solo numeros.
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col">
+            <label for="colonia" class="form-label">Colonia<span class="text-danger"> *</span></label>
+            <select class="form-control" name="colonia" ngModel #colonia="ngModel" [(ngModel)]="colaborador.idColonia"
+              (change)="onColonia($event.target.value)">
+              <!-- <select class="form-control" name="colonia" ngModel
+            #colonia="ngModel"  required (change)="onColonia($event.target.value)"> -->
+              <option *ngFor="let colonia of colonias" [value]="colonia.idColonia">
+                {{colonia.nombre}}
+              </option>
+            </select>
+            <div *ngIf="colonia.invalid && (colonia.dirty || colonia.touched)" class="alert">
+              <!-- <div *ngIf="colonia.errors?.required">
+                La colonia es obligatoria.
+              </div> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col">
+            <label for="ciudad" class="form-label">Ciudad<span class="text-danger"> *</span></label>
+            <select class="form-control" name="ciudad" (change)="onCiudad($event.target.value)">
+              <option *ngFor="let ciudad of ciudadesDir" [value]="ciudad.idCiudad">
+                {{ciudad.nombre}}
+              </option>
+            </select>
+          </div>
+
+          <div class="col">
+            <label for="estado" class="form-label">Estado<span class="text-danger"> *</span></label>
+            <select class="form-control" name="estado" (change)="onEstado($event.target.value)">
+              <option *ngFor="let estado of estadosDir" [value]="estado.idEstado">
+                {{estado.nombre}}
+              </option>
+            </select>
+          </div>
+
+          <div class="col">
+            <label for="pais" class="form-label">País<span class="text-danger"> *</span></label>
+            <select class="form-control" name="pais">
+              <option *ngFor="let pais of paises" [value]="pais.idPais">
+                {{pais.nombre}}
+              </option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="row mt-4 pb-4">
+          <div class="col">
+            <label for="referencia" class="form-label">Referencia</label>
+            <textarea name="referencia" class="form-control" ngModel #referencia="ngModel"
+              [(ngModel)]="colaborador.referenciaDireccion" rows="3"></textarea>
+          </div>
+
+          <div class="col" *ngIf="!archivosDescargaComprobanteDomicilio; else descargarArchivoComprobanteDomicilio">
+            <label for="comprobante" class="form-label">Comprobante de Domicilio</label>
+            <!-- <input class="form-control-file" type="file" name="comprobante"> -->
+            <input class="form-control-file" type="file" name="comprobante" accept=".png, .jpg, .jpeg"
+              (change)="comprobanteDomicilio($event.target.files)" #domicilioUpload>
+          </div>
+          <ng-template #descargarArchivoComprobanteDomicilio>
+            <div class="col">
+              <label for="comprobante" class="form-label">Cambiar Comprobante de Domicilio</label>
+              <input class="form-control-file" type="file" name="comprobante" accept=".png, .jpg, .jpeg"
+                (change)="comprobanteDomicilio($event.target.files)" #domicilioUpload>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary my-auto"
+                (click)="downloadBase64FileComprobanteDomicilio()">Descargar Comprobante de Domicilio</button>
+            </div>
+          </ng-template>
+        </div>
+        <div class="row pb-4">
+          <div class="col-md-12"><span class="font-italic">Los campos con </span><span
+              class="text-danger font-italic">*</span><span class="font-italic"> son obligatorios</span></div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Información Personal">
+      <div class="container mt-5 bg-white rounded-top shadow">
+        <h4 class="pt-4 pb-1">Información Personal</h4>
+        <div class="row">
+          <div class="col-md-4">
+            <label for="sexo" class="form-label">Genero<span class="text-danger"> *</span></label>
+            <select class="form-control" name="sexo" ngModel (change)="onSexo($event.target.value)" #sexo="ngModel"
+              [ngModel]="colaborador.idSexo">
+              <!-- <select class="form-control" name="sexo" ngModel (change)="onSexo($event.target.value)"
+            #sexo="ngModel" [ngModel]="colaborador.idSexo" required > -->
+              <option value="" selected disabled hidden>Seleccionar</option>
+              <option *ngFor="let sexo of sexos" [value]="sexo.idSexo">
+                {{sexo.nombre}}
+              </option>
+
+            </select>
+            <div *ngIf="sexo.invalid && (sexo.dirty || sexo.touched)" class="alert">
+              <!-- <div *ngIf="sexo.errors?.required">
+                El genero es obligatorio.
+              </div> -->
+            </div>
+          </div>
+
+          <div class="col-md-1">
+            <label for="peso" class="form-label">Peso (Kg)</label>
+            <input maxlength="3" size="3" type="text" class="form-control" name="peso" ngModel #peso="ngModel"
+              [(ngModel)]="colaborador.peso" pattern="[0-9]*">
+            <div *ngIf="peso.invalid && (peso.dirty || peso.touched)" class="alert">
+              <div *ngIf="peso.errors?.pattern">
+                El peso debe contener solamente numeros.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-1">
+            <label for="estatura" class="form-label">Estatura(m)</label>
+            <input maxlength="4" size="4" type="text" class="form-control" name="estatura" ngModel #estatura="ngModel"
+              [(ngModel)]="colaborador.estatura">
+            <!-- <div *ngIf="estatura.invalid && (estatura.dirty || estatura.touched)" class="alert">
+              <div *ngIf="estatura.errors?.pattern">
+                La estatura debe contener solamente numeros.
+              </div>
+            </div> -->
+          </div>
+
+          <div class="col-md-2">
+            <label for="tez" class="form-label">Tez</label>
+            <select class="form-control" name="tez" ngModel #tez="ngModel" [ngModel]="colaborador.idTez"
+              (change)="onTez($event.target.value)">
+              <option value="" selected disabled hidden>Seleccionar</option>
+              <option *ngFor="let tez of teces" [value]="tez.idTez">
+                {{tez.nombre}}
+              </option>
+
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label for="estadocivil" class="form-label">Estado Civil<span class="text-danger"> *</span></label>
+            <select class="form-control" name="estadoCivil" ngModel #estadoCivil="ngModel"
+              [ngModel]="colaborador.idEstadoCivil" (change)="onEstadoCivil($event.target.value)">
+              <!-- <select class="form-control" name="estadoCivil" ngModel
+            #estadoCivil="ngModel" [ngModel]="colaborador.idEstadoCivil" (change)="onEstadoCivil($event.target.value)" required> -->
+              <option value="" selected disabled hidden>Seleccionar</option>
+              <option *ngFor="let estadoCivil of estadosCiviles" [value]="estadoCivil.idEstadoCivil">
+                {{estadoCivil.nombre}}
+              </option>
+            </select>
+            <div *ngIf="estadoCivil.invalid && (estadoCivil.dirty || estadoCivil.touched)" class="alert">
+              <!-- <div *ngIf="estadoCivil.errors?.required">
+                El estado civil es obligatorio.
+              </div> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-4 pb-4">
+          <div class="col-md-3">
+            <label for="telefono1" class="form-label">Teléfono Principal<span class="text-danger"> *</span></label>
+            <input maxlength="10" size="10" type="tel" class="form-control" name="telefono1" ngModel
+              #telefono1="ngModel" [(ngModel)]="colaborador.telefono" placeholder="10 Dígitos" pattern="[0-9]*"
+              minlength="10">
+            <!-- <input maxlength="10" size="10" type="tel" class="form-control" name="telefono1" ngModel #telefono1="ngModel" [(ngModel)]="colaborador.telefono" placeholder="10 Dígitos" pattern="[0-9]*" minlength="10" required> -->
+            <div *ngIf="telefono1.invalid && (telefono1.dirty || telefono1.touched)" class="alert">
+              <!-- <div *ngIf="telefono1.errors?.required">
+                  El telefono es obligatorio.
+                </div> -->
+              <div *ngIf="telefono1.errors?.pattern">
+                El telefono debe contener solamente numeros.
+              </div>
+              <div *ngIf="telefono1.errors?.minlength">
+                El telefono debe contener 10 digitos.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <label for="tipoTel1" class="form-label">Tipo de Teléfono Principal</label>
+            <select class="form-control" name="tipoTel1" ngModel #tipoTel1="ngModel"
+              [ngModel]="colaborador.idTipoTelefono" (change)="onTipoTel1($event.target.value)">
+              <option value="" selected disabled hidden>Seleccionar</option>
+              <option *ngFor="let tipoTelefono of tiposTelefono" [value]="tipoTelefono.idTipoTel">
+                {{tipoTelefono.nombre}}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-3">
+            <label for="telefono2" class="form-label">Teléfono Adicional</label>
+            <input maxlength="10" size="10" type="tel" class="form-control" name="telefono2" ngModel
+              #telefono2="ngModel" [(ngModel)]="colaborador.telefono2" placeholder="10 Dígitos" pattern="[0-9]*"
+              minlength="10">
+            <div *ngIf="telefono2.invalid && (telefono2.dirty || telefono2.touched)" class="alert">
+              <div *ngIf="telefono2.errors?.pattern">
+                El telefono debe contener solamente numeros.
+              </div>
+              <div *ngIf="telefono2.errors?.minlength">
+                El telefono debe contener 10 digitos.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <label for="tipoTel2" class="form-label">Tipo de Teléfono Adicional</label>
+            <select class="form-control" name="tipoTel2" ngModel #tipoTel2="ngModel"
+              [ngModel]="colaborador.idTipoTelefono2" (change)="onTipoTel2($event.target.value)">
+              <option value="" selected disabled hidden>Seleccionar</option>
+              <option *ngFor="let tipoTelefono of tiposTelefono" [value]="tipoTelefono.idTipoTel">
+                {{tipoTelefono.nombre}}
+              </option>
+            </select>
+          </div>
+
+
+        </div>
+        <div class="row pb-4">
+          <div class="col-md-3">
+            <label for="correoelectronico" class="form-label">Correo Electrónico<span class="text-danger">
+                *</span></label>
+            <input type="email" class="form-control" name="correoelectronico" ngModel #correoelectronico="ngModel"
+              [(ngModel)]="colaborador.correoElectronico" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+            <!-- <input type="email" class="form-control" name="correoelectronico" ngModel #correoelectronico="ngModel" [(ngModel)]="colaborador.correoElectronico" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required> -->
+            <div *ngIf="correoelectronico.invalid && (correoelectronico.dirty || correoelectronico.touched)"
+              class="alert">
+              <!-- <div *ngIf="correoelectronico.errors?.required">
+                El correo es obligatorio.
+              </div> -->
+              <div *ngIf="correoelectronico.errors?.pattern">
+                El correo es incorrecto.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label class="control-label">¿Tiene hijos?<span class="text-danger"> *</span></label>
+              <div class="form-control">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="hijos" id="hijosS" value="1" ngModel
+                    #hijos="ngModel" [(ngModel)]="colaborador.hijos" (click)="enableHijosViven()">
+                  <label class="form-check-label" for="hijosS">Sí</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="hijos" id="hijosN" value="0" ngModel
+                    #hijos="ngModel" [(ngModel)]="colaborador.hijos" (click)="disableHijosViven()">
+                  <label class="form-check-label" for="hijosN">No</label>
+                </div>
+
+              </div>
+              <div *ngIf="hijos.invalid && (hijos.dirty || hijos.touched)" class="alert">
+                <!-- <div *ngIf="hijos.errors?.required">
+                    El campo es obligatorio.
+                  </div> -->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label class="control-label">¿Viven con usted?<span class="text-danger"> *</span></label>
+              <div class="form-control">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="hijosViven" id="hijosVivenS" value="1" ngModel
+                    #hijosViven="ngModel" [(ngModel)]="colaborador.hijosViven" disabled="disabled"
+                    [disabled]="radioDisabledHijosViven">
+                  <label class="form-check-label" for="hijosVivenS">Sí</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="hijosViven" id="hijosVivenN" value="0" ngModel
+                    #hijosViven="ngModel" [(ngModel)]="colaborador.hijosViven" disabled="disabled"
+                    [disabled]="radioDisabledHijosViven">
+                  <label class="form-check-label" for="hijosVivenN">No</label>
+                </div>
+              </div>
+              <div *ngIf="hijosViven.invalid && (hijosViven.dirty || hijosViven.touched)" class="alert">
+                <!-- <div *ngIf="hijosViven.errors?.required">
+                    El campo es obligatorio.
+                  </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row pb-4">
+          <div class="col-md-12"><span class="font-italic">Los campos con </span><span
+              class="text-danger font-italic">*</span><span class="font-italic"> son obligatorios</span></div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Pago">
+      <div class="container mt-5 bg-white rounded-top shadow">
+        <h4 class="pt-4 pb-1">Pago</h4>
+        <div class="form-group dynamic-element1">
+          <div class="row pb-4">
+
+            <div class="col-md-3">
+              <label for="nombreBenef" class="form-label">Nombre del Beneficiario<span class="text-danger">
+                  *</span></label>
+              <input type="text" class="form-control valGlobal" name="nombreBenef" [(ngModel)]="pago.nombre" ngModel
+                #nombreBenef="ngModel">
+            </div>
+
+            <div class="col-md-3">
+              <label for="banco" class="form-label">Banco<span class="text-danger"> *</span></label>
+              <select class="form-control" name="banco" ngModel #banco="ngModel"
+                (change)="onBanco($event.target.value)">
+                <option value="" selected disabled hidden>Seleccionar</option>
+                <option *ngFor="let banco of bancos" [value]="banco.idBanco">
+                  {{banco.nombre}}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label for="tipocuenta" class="form-label">Tipo de Cuenta<span class="text-danger"> *</span></label>
+              <select class="form-control" name="tipocuenta" ngModel #tipocuenta="ngModel" [(ngModel)]="pago.tipoCuenta"
+                (change)="onTipoCuenta($event.target.value)">
+                <option value="" selected disabled hidden>Seleccionar</option>
+                <option value="CLABE">CLABE</option>
+                <option value="Numero de Tarjeta">Numero de Tarjeta</option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label for="numerocuenta" class="form-label">Numero<span class="text-danger"> *</span></label>
+              <input type="text" class="form-control" name="numerocuenta" [(ngModel)]="pago.numero" ngModel
+                #numerocuenta="ngModel">
+            </div>
+          </div>
+          <div class="row pb-4">
+            <div class="col-md-3">
+              <label for="imagenTarjeta" class="form-label">Imagen Tarjeta/Estado de Cuenta</label>
+              <input class="form-control-file" type="file" name="imagenTarjeta" accept=".png, .jpg, .jpeg" (change)="onPagoFileSelected($event.target.files)">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12"><span class="font-italic">Los campos con </span><span
+                class="text-danger font-italic">*</span><span class="font-italic"> son obligatorios</span></div>
+          </div>
+        </div>
+
+
+        <div class="row mt-4">
+          <div class="col-md-12 text-center">
+            <button class="btn btn-primary add-one" (click)="agregarPago(null)">Agregar Otro</button>
+            <button class="btn btn-warning delete ml-3" (click)="limpiarPago()">Cancelar</button>
+          </div>
+        </div>
+        <hr class="mt-3 mb-3" />
+        <div class="row mt-4 pb-4">
+          <div class="col-md-12 text-center">
+            <table mat-table [dataSource]="pagoSource" #pagosTable class="mat-elevation-z8">
+              <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef> Propietario </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="banco">
+                <th mat-header-cell *matHeaderCellDef> Banco</th>
+                <td mat-cell *matCellDef="let element"> {{element.banco.nombre}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="tipoCuenta">
+                <th mat-header-cell *matHeaderCellDef> Tipo Cuenta </th>
+                <td mat-cell *matCellDef="let element"> {{element.tipoCuenta}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="numero">
+                <th mat-header-cell *matHeaderCellDef> N&uacute;mero </th>
+                <td mat-cell *matCellDef="let element"> {{element.numero}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="comprobantePago">
+                <th mat-header-cell *matHeaderCellDef> Comprobante </th>
+                <td mat-cell *matCellDef="let element">
+                  <button class="btn btn-danger" color="danger" *ngIf="element.comprobantePago" (click)="descargarComprobantePago(element)">
+                    Descargar Comprobante
+                  </button>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="deletePago">
+                <th mat-header-cell *matHeaderCellDef> Acci&oacute;n </th>
+                <td mat-cell *matCellDef="let element">
+                  <button class="btn btn-danger" color="danger" (click)="borraPago(element)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="pagoColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: pagoColumns;"></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Estudios">
+      <div class="container mt-5 bg-white rounded-top shadow">
+        <h4 class="pt-4 pb-1">Estudios</h4>
+        <div class="col-md-3">
+          <label for="gradoEstudio" class="form-label">Último grado de estudios<span class="text-danger">
+              *</span></label>
+          <select class="form-control" name="gradoEstudio" (change)="onGradoEstudio($event.target.value)"
+            #gradoEstudio="ngModel" [ngModel]="colaborador.idGradoEstudio" ngModel>
+            <option value="" selected disabled hidden>Seleccionar</option>
+            <option *ngFor="let gradoEstudio of gradoEstudios" [value]="gradoEstudio.idGrado">
+              {{gradoEstudio.nombre}}
+            </option>
+          </select>
+        </div>
+        <hr class="mt-3 mb-3" />
+        <h6 class="pb-1">Favor de capturar cada uno de los estudios, cursos y diplomados que haya tomado</h6>
+        <div class="form-group dynamic-element">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="institucion" class="form-label">Institución<span class="text-danger"> *</span></label>
+                  <input type="text" class="form-control" id="institucion" name="institucion" #institucion="ngModel"
+                    [(ngModel)]="estudio.institucion">
+                </div>
+              </div>
+
+              <div class="row py-3">
+                <div class="col-md-6">
+                  <label for="inicioEst" class="form-label">Inicio<span class="text-danger"> *</span></label>
+                  <input type="month" class="form-control datepicker" name="inicioEst" #inicioEst="ngModel"
+                    min="1900-01" [(ngModel)]="estudio.fechaInicio" />
+                </div>
+
+                <div class="col-md-6">
+                  <label for="terminacionEst" class="form-label">Terminación</label>
+                  <input type="month" class="form-control datepicker" name="terminacionEst" #terminacionEst="ngModel"
+                    min="1900-02" [(ngModel)]="estudio.fechaFin" disabled="disabled" [disabled]="textBoxDisabledCed">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">¿Se terminaron los estudios?<span class="text-danger"> *</span></label>
+                    <div class="form-control">
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="estudiosEst" id="estudiosEstS" value="Si"
+                          (click)="enableCed($event.target.value)" ngModel #estudiosEst="ngModel">
+                        <label class="form-check-label" for="estudiosEstS">Sí</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="estudiosEst" id="estudiosEstN" value="No"
+                          (click)="disableCed($event.target.value)" ngModel #estudiosEst="ngModel">
+                        <label class="form-check-label" for="estudiosEstN">No</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="estudiosEst" id="estudiosEstT" value="Trunco"
+                          (click)="disableCed($event.target.value)" ngModel #estudiosEst="ngModel">
+                        <label class="form-check-label" for="estudiosEstT">Trunco</label>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="row mt-3 pb-4">
+                <div class="col-md-12">
+                  <label for="formFile" class="form-label">Imagen de la Cédula o Certificado</label>
+                  <input class="form-control-file" type="file" id="formFile" accept=".png, .jpg, .jpeg"
+                    (change)="onCedulaFileSelected($event.target.files)" disabled="disabled"
+                    [disabled]="textBoxDisabledCed">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12"><span class="font-italic">Los campos con </span><span
+                    class="text-danger font-italic">*</span><span class="font-italic"> son obligatorios</span></div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="comentarioEstudio" class="form-label">Estudio / Carrera / Curso<span class="text-danger">
+                  *</span></label>
+              <textarea name="comentarioEstudio" class="form-control" rows="5" #comentarioEstudio="ngModel"
+                [(ngModel)]="estudio.comentarios"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-container">
+          <div class="dynamic-stuff">
+            <!-- Dynamic element will be cloned here -->
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-md-12 text-center">
+            <button class="btn btn-primary add-one" (click)="agregarEstudio(null)">Agregar Otro</button>
+            <button class="btn btn-warning delete ml-3" (click)="limpiarEstudio()">Cancelar</button>
+          </div>
+        </div>
+        <hr class="mt-3 mb-3" />
+        <div class="row mt-4 pb-4">
+          <div class="col-md-12 text-center">
+            <table mat-table [dataSource]="estudioSource" #estudiosTable class="mat-elevation-z8">
+              <ng-container matColumnDef="institucion">
+                <th mat-header-cell *matHeaderCellDef> Instituci&oacute;n </th>
+                <td mat-cell *matCellDef="let element"> {{element.institucion}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="comentarios">
+                <th mat-header-cell *matHeaderCellDef> Estudio</th>
+                <td mat-cell *matCellDef="let element"> {{element.comentarios}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="inicio">
+                <th mat-header-cell *matHeaderCellDef> Inicio </th>
+                <td mat-cell *matCellDef="let element"> {{element.fechaInicio}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="fin">
+                <th mat-header-cell *matHeaderCellDef> Fin </th>
+                <td mat-cell *matCellDef="let element"> {{element.fechaFin}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="estatus">
+                <th mat-header-cell *matHeaderCellDef> Estatus </th>
+                <td mat-cell *matCellDef="let element"> {{element?.estatus.nombre}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="comprobanteEstudios">
+                <th mat-header-cell *matHeaderCellDef> Comprobante </th>
+                <td mat-cell *matCellDef="let element">
+                  <button class="btn btn-danger" color="danger" *ngIf="element.cedula" (click)="descargarComprobanteEstudios(element)">
+                    Descargar Comprobante
+                  </button>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="deleteColaborador">
+                <th mat-header-cell *matHeaderCellDef> Acci&oacute;n </th>
+                <td mat-cell *matCellDef="let element">
+                  <button class="btn btn-danger" (click)="borraEstudio(element)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="estudioColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: estudioColumns;"></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Experiencia Laboral">
+      <div class="container mt-5 bg-white rounded-top shadow">
+        <h4 class="pt-4 pb-1">Experiencia Laboral</h4>
+        <h6 class="pb-1">Favor de capturar cada una de las experiencias laborales que tenga</h6>
+        <div class="form-group dynamic-element1">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="empresa" class="form-label">Empresa/Institución<span class="text-danger"> *</span></label>
+                  <input type="text" class="form-control" name="empresa" [(ngModel)]="experiencia.empresa" ngModel
+                    #empresa="ngModel">
+                </div>
+              </div>
+
+              <div class="row pt-3 pb-3">
+                <div class="col-md-6">
+                  <label for="inicioExp" class="form-label">Inicio<span class="text-danger"> *</span></label>
+                  <input type="month" class="form-control datepicker" name="inicioExp" min="1900-01"
+                    [(ngModel)]="experiencia.fechaInicio" ngModel #inicioExp="ngModel">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="terminacionExp" class="form-label">Terminación<span class="text-danger"> *</span></label>
+                  <input type="month" class="form-control datepicker" name="terminacionExp" min="1900-02"
+                    [(ngModel)]="experiencia.fechaFin" ngModel #terminacionExp="ngModel">
+                </div>
+              </div>
+              <div class="row pb-4">
+                <div class="col-md-6">
+                  <label for="institucion" class="form-label">Nombre de su Jefe</label>
+                  <input type="text" class="form-control" placeholder="" name="referencia"
+                    [(ngModel)]="experiencia.referencia">
+                </div>
+                <div class="col-md-4">
+                  <label for="telefono" class="form-label">Teléfono de Referencia</label>
+                  <input maxlength="10" size="10" type="tel" class="form-control" name="telefono"
+                    [(ngModel)]="experiencia.telefono" placeholder="10 Dígitos">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12"><span class="font-italic">Los campos con </span><span
+                    class="text-danger font-italic">*</span><span class="font-italic"> son obligatorios</span></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="experienciaAct" class="form-label">Actividades Realizadas<span class="text-danger">
+                  *</span></label>
+              <textarea name="experienciaAct" class="form-control" rows="3" ngModel #experienciaAct="ngModel"
+                [(ngModel)]="experiencia.comentario"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-container">
+          <div class="dynamic-stuff1">
+            <!-- Dynamic element will be cloned here -->
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-md-12 text-center">
+            <button class="btn btn-primary add-one" (click)="agregarExperiencia(null)">Agregar Otra</button>
+            <button class="btn btn-warning delete ml-3" (click)="limpiarEstudio()">Cancelar</button>
+          </div>
+        </div>
+        <hr class="mt-3 mb-3" />
+        <div class="row mt-4 pb-4">
+          <div class="col-md-12 text-center">
+            <table mat-table [dataSource]="experienciaSource" #experienciasTable class="mat-elevation-z8">
+              <ng-container matColumnDef="institucion">
+                <th mat-header-cell *matHeaderCellDef> Empresa/Instituci&oacute;n </th>
+                <td mat-cell *matCellDef="let element"> {{element.empresa}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="comentario">
+                <th mat-header-cell *matHeaderCellDef> Actividades</th>
+                <td mat-cell *matCellDef="let element"> {{element.comentario}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="fechaInicio">
+                <th mat-header-cell *matHeaderCellDef> Inicio </th>
+                <td mat-cell *matCellDef="let element"> {{element.fechaInicio}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="fechaFin">
+                <th mat-header-cell *matHeaderCellDef> Fin </th>
+                <td mat-cell *matCellDef="let element"> {{element.fechaFin}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="telefono">
+                <th mat-header-cell *matHeaderCellDef> Tel&eacute;fono </th>
+                <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="deleteExperiencia">
+                <th mat-header-cell *matHeaderCellDef> Acci&oacute;n </th>
+                <td mat-cell *matCellDef="let element">
+                  <button class="btn btn-danger" (click)="borraExperiencia(element)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="experienciaColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: experienciaColumns;"></tr>
+            </table>
+
+
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Competencias">
+      <div class="container mt-5 bg-white rounded-top shadow">
+        <h4 class="pt-4 pb-1">Competencias</h4>
+        <div class="row pb-4">
+          <div class="col-md-6">
+            <label>Especialidades<span class="text-danger"> *</span></label>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="form-check" *ngFor="let especialidad of especialidades" [value]="especialidad.id">
+                  <input class="form-check-input" type="checkbox" id="{{especialidad.nombre}}"
+                    (change)="especialidadCheck(especialidad)" [checked]="inputCheckedEspecialidad(especialidad)">
+                  <label class="form-check-label" for="{{especialidad.nombre}}">
+                    {{especialidad.nombre}}
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="especialidadCheck12" (click)="enableOtraEsp()">
+                  <label class="form-check-label" for="especialidadCheck12">
+                    Otras
+                  </label>
+                </div>
+                <div class="col-md-12">
+                  <input type="text" class="form-control" id="especialidadOtra" placeholder="" value="" disabled
+                    [disabled]="textBoxDisabledOtraEsp">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label>Habilidades<span class="text-danger"> *</span></label>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="form-check" *ngFor="let habilidad of habilidades" [value]="habilidad.idHabilidad">
+                  <input class="form-check-input" type="checkbox" id="{{habilidad.nombre}}"
+                    (change)="habilidadCheck(habilidad)" [checked]="inputCheckedHabilidad(habilidad)">
+                  <label class="form-check-label" for="{{habilidad.nombre}}">
+                    {{habilidad.nombre}}
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="habilidadCheck20" (click)="enableOtraHab()">
+                  <label class="form-check-label" for="habilidadCheck20">
+                    Otras
+                  </label>
+                </div>
+                <div class="col-md-12">
+                  <input type="text" class="form-control" id="habilidadOtra" placeholder="" value="" disabled
+                    [disabled]="textBoxDisabledOtraHab">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row pb-4">
+          <div class="col-md-12"><span class="font-italic">Los campos con </span><span
+              class="text-danger font-italic">*</span><span class="font-italic"> son obligatorios</span></div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Disponibilidad de trabajo">
+      <div class="container mt-5 bg-white rounded-top shadow">
+        <h4 class="pt-4 pb-1">Disponibilidad de trabajo</h4>
+        <div class="row pb-4">
+          <hr class="mt-2 mb-3" />
+          <div class="col-md-6">
+            <h5 class="pb-1">Días y Horarios de Disponibilidad<span class="text-danger"> *</span></h5>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" value="" id="todos" name="todosDias" ngModel
+                #todosDias="ngModel" [(ngModel)]="diasLaborales.todosDias"
+                (click)="checkboxesDiasLaborales(0,$event.currentTarget.checked)" [checked]="diasLaborales.todosDias">
+              <label class="form-check-label" for="todos">
+                <p class="font-weight-bold">Todos los Dias
+                </p>
+              </label>
+            </div>
+            <div class="row pb-3">
+              <div class="col-md-6">
+                <label for="turnoT">Turno</label>
+                <select class="form-control" id="turnoT" name="todosDiasTurno" ngModel #todosDiasTurno="ngModel"
+                  [(ngModel)]="diasLaborales.todosDiasTurno" disabled="disabled" [disabled]="!diasLaborales.todosDias">
+
+                  <option value="Dia">Dia</option>
+                  <option value="Noche">Noche</option>
+                  <option value="TodoElDia">Todo el Dia</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" value="" id="lunes" name="lunes" ngModel #lunes="ngModel"
+                [(ngModel)]="diasLaborales.lunes" (click)="checkboxesDiasLaborales(1,$event.currentTarget.checked)"
+                [checked]="diasLaborales.lunes">
+              <label class="form-check-label" for="lunes">
+                <p class="font-weight-bold">Lunes</p>
+              </label>
+            </div>
+            <div class="row pb-3">
+              <div class="col-md-6">
+                <label for="turnoL">Turno</label>
+                <select class="form-control" id="turnoL" name="lunesTurno" ngModel #lunesTurno="ngModel"
+                  [(ngModel)]="diasLaborales.lunesTurno" disabled="disabled" [disabled]="!diasLaborales.lunes">
+
+                  <option value="Dia">Dia</option>
+                  <option value="Noche">Noche</option>
+                  <option value="TodoElDia">Todo el Dia</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" value="" id="martes" name="martes" ngModel
+                #martes="ngModel" [(ngModel)]="diasLaborales.martes"
+                (click)="checkboxesDiasLaborales(2,$event.currentTarget.checked)">
+              <label class="form-check-label" for="martes">
+                <p class="font-weight-bold">Martes
+                </p>
+              </label>
+            </div>
+            <div class="row pb-3">
+              <div class="col-md-6">
+                <label for="turnoM">Turno</label>
+                <select class="form-control" id="turnoM" name="martesTurno" ngModel #martesTurno="ngModel"
+                  [(ngModel)]="diasLaborales.martesTurno" disabled="disabled" [disabled]="!diasLaborales.martes">
+
+                  <option value="Dia">Dia</option>
+                  <option value="Noche">Noche</option>
+                  <option value="TodoElDia">Todo el Dia</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" value="" id="miercoles" name="miercoles" ngModel
+                #miercoles="ngModel" [(ngModel)]="diasLaborales.miercoles"
+                (click)="checkboxesDiasLaborales(3,$event.currentTarget.checked)">
+              <label class="form-check-label" for="miercoles">
+                <p class="font-weight-bold">Miércoles</p>
+              </label>
+            </div>
+            <div class="row pb-3">
+              <div class="col-md-6">
+                <label for="turnoMi">Turno</label>
+                <select class="form-control" id="turnoMi" name="miercolesTurno" ngModel #miercolesTurno="ngModel"
+                  [(ngModel)]="diasLaborales.miercolesTurno" disabled="disabled" [disabled]="!diasLaborales.miercoles">
+
+                  <option value="Dia">Dia</option>
+                  <option value="Noche">Noche</option>
+                  <option value="TodoElDia">Todo el Dia</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" value="" id="jueves" name="jueves" ngModel
+                #jueves="ngModel" [(ngModel)]="diasLaborales.jueves"
+                (click)="checkboxesDiasLaborales(4,$event.currentTarget.checked)">
+              <label class="form-check-label" for="jueves">
+                <p class="font-weight-bold">Jueves
+                </p>
+              </label>
+            </div>
+            <div class="row pb-3">
+              <div class="col-md-6">
+                <label for="turnoJ">Turno</label>
+                <select class="form-control" id="turnoJ" name="juevesTurno" ngModel #juevesTurno="ngModel"
+                  [(ngModel)]="diasLaborales.juevesTurno" disabled="disabled" [disabled]="!diasLaborales.jueves">
+
+                  <option value="Dia">Dia</option>
+                  <option value="Noche">Noche</option>
+                  <option value="TodoElDia">Todo el Dia</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" value="" id="viernes" name="viernes" ngModel
+                #viernes="ngModel" [(ngModel)]="diasLaborales.viernes"
+                (click)="checkboxesDiasLaborales(5,$event.currentTarget.checked)">
+              <label class="form-check-label" for="viernes">
+                <p class="font-weight-bold">Viernes
+                </p>
+              </label>
+            </div>
+            <div class="row pb-3">
+              <div class="col-md-6">
+                <label for="turnoV">Turno</label>
+                <select class="form-control" id="turnoV" name="viernesTurno" ngModel #viernesTurno="ngModel"
+                  [(ngModel)]="diasLaborales.viernesTurno" disabled="disabled" [disabled]="!diasLaborales.viernes">
+
+                  <option value="Dia">Dia</option>
+                  <option value="Noche">Noche</option>
+                  <option value="TodoElDia">Todo el Dia</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" value="" id="sabado" name="sabado" ngModel
+                #sabado="ngModel" [(ngModel)]="diasLaborales.sabado"
+                (click)="checkboxesDiasLaborales(6,$event.currentTarget.checked)">
+              <label class="form-check-label" for="sabado">
+                <p class="font-weight-bold">Sábado
+                </p>
+              </label>
+            </div>
+            <div class="row pb-3">
+              <div class="col-md-6">
+                <label for="turnoS">Turno</label>
+                <select class="form-control" id="turnoS" name="sabadoTurno" ngModel #sabadoTurno="ngModel"
+                  [(ngModel)]="diasLaborales.sabadoTurno" disabled="disabled" [disabled]="!diasLaborales.sabado">
+
+                  <option value="Dia">Dia</option>
+                  <option value="Noche">Noche</option>
+                  <option value="TodoElDia">Todo el Dia</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" value="" id="domingo" name="domingo" ngModel
+                #domingo="ngModel" [(ngModel)]="diasLaborales.domingo"
+                (click)="checkboxesDiasLaborales(7,$event.currentTarget.checked)">
+              <label class="form-check-label" for="domingo">
+                <p class="font-weight-bold">Domingo
+                </p>
+              </label>
+            </div>
+            <div class="row pb-3">
+              <div class="col-md-6">
+                <label for="turnoD">Turno</label>
+                <select class="form-control" id="turnoD" name="domingoTurno" ngModel #domingoTurno="ngModel"
+                  [(ngModel)]="diasLaborales.domingoTurno" disabled="disabled" [disabled]="!diasLaborales.domingo">
+
+                  <option value="Dia">Dia</option>
+                  <option value="Noche">Noche</option>
+                  <option value="TodoElDia">Todo el Dia</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <h5 class="pb-1">Otros</h5>
+            <div class="row">
+              <div class="col-md-4">
+                <label for="permanencia" class="form-label">Permanencia<span class="text-danger"> *</span></label>
+                <select class="form-control" name="permanencia" ngModel #permanencia="ngModel"
+                  [ngModel]="colaborador.idPermanencia" (change)="onPermanencia($event.target.value)">
+                  <!-- <select class="form-control" name="permanencia" ngModel #permanencia="ngModel" [ngModel]="colaborador.idPermanencia" (change)="onPermanencia($event.target.value)"   required> -->
+                  <option value="" selected disabled hidden>Seleccionar</option>
+                  <option *ngFor="let permanencia of permanencias" [value]="permanencia.idPermanencia">
+                    {{permanencia.nombre}}
+                  </option>
+                </select>
+                <div *ngIf="permanencia.invalid && (permanencia.dirty || permanencia.touched)" class="alert">
+                  <!-- <div *ngIf="permanencia.errors?.required">
+                    La permanencia es obligatoria
+                  </div> -->
+                </div>
+              </div>
+
+              <div class="col-md-6">
+
+                <label>Zonas Laborales</label>
+                <div class="form-group row pt-1">
+                  <div class="col-sm-10">
+                    <div class="form-check" *ngFor="let zonaLaboral of zonasLaborales"
+                      [value]="zonaLaboral.idZonaLaboral">
+                      <input class="form-check-input" type="checkbox" id={{zonaLaboral.nombre}}
+                        (change)="zonasCheck(zonaLaboral)" [checked]="inputCheckedZonasLaborales(zonaLaboral)">
+                      <!-- <input class="form-check-input" type="checkbox" id={{zonaLaboral.nombre}} 
+                      (change)="zonasCheck(zonaLaboral)" required> -->
+                      <label class="form-check-label" for={{zonaLaboral.nombre}}>
+                        {{zonaLaboral.nombre}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">¿Atiende COVID?<span class="text-danger"> *</span></label>
+                  <div class="form-control">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="atiendecovid" id="atiendecovidS" value="1"
+                        ngModel #atiendecovid="ngModel" [(ngModel)]="colaborador.atiendeCovid">
+                      <!-- <input class="form-check-input" type="radio" name="atiendecovid" id="atiendecovid"
+                        value="option1" ngModel
+                        #atiendecovid="ngModel" required> -->
+                      <label class="form-check-label" for="covids">Sí</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="atiendecovid" id="atiendecovidN" value="0"
+                        ngModel #atiendecovid="ngModel" [(ngModel)]="colaborador.atiendeCovid">
+                      <!-- <input class="form-check-input" type="radio" name="atiendecovid" id="covidn" value="option2" ngModel
+                      #atiendecovid="ngModel" required> -->
+                      <label class="form-check-label" for="covidn">No</label>
+                    </div>
+
+                  </div>
+                  <div *ngIf="atiendecovid.invalid && (atiendecovid.dirty || atiendecovid.touched)" class="alert">
+                    <!-- <div *ngIf="atiendecovid.errors?.required">
+                        El campo es obligatorio.
+                      </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">¿Tiene antecedentes penales?<span class="text-danger"> *</span></label>
+                  <div class="form-control">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="apenales" id="apenalesS" value="1" ngModel
+                        #apenales="ngModel" [(ngModel)]="colaborador.antecedentePenales">
+                      <!-- <input class="form-check-input" type="radio" name="apenales" id="apenales" value="option1" ngModel
+                  #apenales="ngModel" required> -->
+                      <label class="form-check-label" for="antecedentesS">Sí</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="apenales" id="apenalesN" value="0" ngModel
+                        #apenales="ngModel" [(ngModel)]="colaborador.antecedentePenales">
+                      <!-- <input class="form-check-input" type="radio" name="apenales" id="antecedentesN"
+                    value="option2" ngModel
+                    #apenales="ngModel" required> -->
+                      <label class="form-check-label" for="antecedentesN">No</label>
+                    </div>
+
+                  </div>
+                  <div *ngIf="apenales.invalid && (apenales.dirty || apenales.touched)" class="alert">
+                    <!-- <div *ngIf="apenales.errors?.required">
+                        El campo es obligatorio.
+                      </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">¿Tiene auto propio?<span class="text-danger"> *</span></label>
+                  <div class="form-control">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="autopropio" id="autopropioS" value="1" ngModel
+                        #autopropio="ngModel" [(ngModel)]="colaborador.autoPropio">
+                      <!-- <input class="form-check-input" type="radio" name="autopropio" id="autopropioS"
+                        value="1" ngModel
+                        #autopropio="ngModel" [(ngModel)]="colaborador.autoPropio" required> -->
+                      <label class="form-check-label" for="autopropioS">Sí</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="autopropio" id="autopropioN" value="0" ngModel
+                        #autopropio="ngModel" [(ngModel)]="colaborador.autoPropio">
+                      <!-- <input class="form-check-input" type="radio" name="autopropio" id="autopropioN"
+                        value="0" ngModel
+                        #autopropio="ngModel" [(ngModel)]="colaborador.autoPropio" required> -->
+                      <label class="form-check-label" for="autopropioN">No</label>
+                    </div>
+                  </div>
+                  <div *ngIf="autopropio.invalid && (autopropio.dirty || autopropio.touched)" class="alert">
+                    <!-- <div *ngIf="autopropio.errors?.required">
+                        El campo es obligatorio.
+                      </div> -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">¿Tiene licencia vigente?<span class="text-danger"> *</span></label>
+                  <div class="form-control">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="licenciaManejar" id="licenciaManejarS"
+                        value="1" ngModel #licenciaManejar="ngModel" [(ngModel)]="colaborador.licenciaManejar">
+                      <label class="form-check-label" for="licenciaManejarS">Sí</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="licenciaManejar" id="licenciaManejarN"
+                        value="0" ngModel #licenciaManejar="ngModel" [(ngModel)]="colaborador.licenciaManejar">
+                      <label class="form-check-label" for="licenciaManejarN">No</label>
+                    </div>
+
+                  </div>
+                  <div *ngIf="licenciaManejar.invalid && (licenciaManejar.dirty || licenciaManejar.touched)"
+                    class="alert">
+                    <!-- <div *ngIf="licenciaManejar.errors?.required">
+                        El campo es obligatorio.
+                      </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">¿Tiene disponibilidad para viajar?<span class="text-danger">
+                      *</span></label>
+                  <div class="form-control">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="disponibilidad" id="disponibilidadS" value="1"
+                        ngModel #disponibilidad="ngModel" [(ngModel)]="colaborador.dispuestoViajar">
+                      <!-- <input class="form-check-input" type="radio" name="disponibilidad" id="disponibilidadS"
+                        value="1" ngModel
+                        #disponibilidad="ngModel" [(ngModel)]="colaborador.dispuestoViajar" required> -->
+                      <label class="form-check-label" for="disponibilidadS">Sí</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="disponibilidad" id="disponibilidadN" value="0"
+                        ngModel #disponibilidad="ngModel" [(ngModel)]="colaborador.dispuestoViajar">
+                      <!-- <input class="form-check-input" type="radio" name="disponibilidad" id="disponibilidadN"
+                        value="0" ngModel
+                        #disponibilidad="ngModel" [(ngModel)]="colaborador.dispuestoViajar" required> -->
+                      <label class="form-check-label" for="disponibilidadN">No</label>
+                    </div>
+                  </div>
+                  <div *ngIf="disponibilidad.invalid && (disponibilidad.dirty || disponibilidad.touched)" class="alert">
+                    <!-- <div *ngIf="disponibilidad.errors?.required">
+                        El campo es obligatorio.
+                      </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">¿Tiene Visa Americana?<span class="text-danger"> *</span></label>
+                  <div class="form-control">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" name="visa" id="visa"
+                        value="1" (click)="enableTextBoxVis()" ngModel #visa="ngModel" [(ngModel)]="colaborador.visa">
+                      <!-- <input class="form-check-input" type="radio" name="inlineRadioOptions" 
+                      name="visa" id="visa" value="option1"
+                        (click)="enableTextBoxVis()" ngModel
+                        #visa="ngModel" [(ngModel)]="colaborador.visa" required> -->
+                      <label class="form-check-label" for="visaS">Sí</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" name="visa" id="visaN"
+                        value="0" (click)="disableTextBoxVis()" ngModel #visa="ngModel" [(ngModel)]="colaborador.visa">
+                      <!-- <input class="form-check-input" type="radio" name="inlineRadioOptions" name="visa" 
+                      id="visaN" value="0"
+                        (click)="disableTextBoxVis()" ngModel
+                        #visa="ngModel" [(ngModel)]="colaborador.visa" required> -->
+                      <label class="form-check-label" for="visaN">No</label>
+                    </div>
+                  </div>
+                  <div *ngIf="visa.invalid && (visa.dirty || visa.touched)" class="alert">
+                    <!-- <div *ngIf="visa.errors?.required">
+                        El campo es obligatorio.
+                      </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <label for="visaNum" class="form-label">Número de Visa</label>
+                <input type="text" class="form-control" id="numvisa" name="numvisa" ngModel #numvisa="ngModel"
+                  [(ngModel)]="colaborador.visaNumero" disabled="disabled" [disabled]="textBoxDisabledVis">
+              </div>
+              <div class="col-md-4">
+                <!-- Modificación tipo visa 14/11/2021 -->
+                <label for="tipoVisa" class="form-label">Tipo de Visa</label>
+                <select class="form-control" name="tipoVisa" (change)="onTipoVisa($event.target.value)"
+                  #tipoVisa="ngModel" [ngModel]="colaborador.tipoVisa" ngModel disabled="disabled"
+                  [disabled]="textBoxDisabledVis">
+                  <option value="" selected disabled hidden>Seleccionar</option>
+                  <option *ngFor="let tipoVisa of tipoVisas" [value]="tipoVisa.idTipoVisa">
+                    {{tipoVisa.nombre}}
+                  </option>
+                </select>
+                <!-- <label for="tipNum" class="form-label">Tipo de Visa</label>
+                <input type="text" class="form-control" id="tipovisa" name="tipovisa" ngModel #tipovisa="ngModel" [(ngModel)]="colaborador.tipoVisa" disabled="disabled" [disabled]="textBoxDisabledVis"> -->
+              </div>
+              <div class="col-md-4">
+                <label for="visaExp" class="form-label">Expiración</label>
+                <input type="date" class="form-control" id="fechaexpvisa" name="visaExp" value="dd-MM-yyyy" ngModel
+                  #visaExp="ngModel" [(ngModel)]="colaborador.expiracionVisa" disabled="disabled"
+                  [disabled]="textBoxDisabledVis">
+              </div>
+            </div>
+            <div class="row" *ngIf="!archivosDescargaVisa; else descargarArchivo">
+              <div class="col-md-12 mt-3">
+                <label for="visaImg" class="form-label">Imagen de la Visa</label>
+                <input class="form-control-file" type="file" id="visaImg" name="visaImg" accept=".png, .jpg, .jpeg"
+                  (change)="onVisa($event.target.files)" #visaUpload disabled="disabled"
+                  [disabled]="textBoxDisabledVis">
+              </div>
+            </div>
+            <ng-template #descargarArchivo>
+              <div class="row">
+                <div class="col-md-6 mt-3">
+                  <label for="visaImg" class="form-label">Cambiar Imagen de la Visa</label>
+                  <input class="form-control-file" type="file" id="visaImg" name="visaImg" accept=".png, .jpg, .jpeg"
+                    (change)="onVisa($event.target.files)" #visaUpload disabled="disabled"
+                    [disabled]="textBoxDisabledVis">
+                </div>
+                <div class="col-md-6 my-auto">
+                  <button type="button" class="btn btn-primary" (click)="downloadBase64FileVisa()">Descargar
+                    Visa</button>
+                </div>
+              </div>
+            </ng-template>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="control-label">¿Tiene pasaporte?<span class="text-danger"> *</span></label>
+                  <div class="form-control">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="pasaporte" id="pasaporte" value="1"
+                        (click)="enableTextBoxPas()" ngModel #pasaporte="ngModel" [(ngModel)]="colaborador.pasaporte">
+                      <!-- <input class="form-check-input" type="radio" name="pasaporte" id="pasaporte" 
+                      value="1"  (click)="enableTextBoxPas()" ngModel
+                        #pasaporte="ngModel" [(ngModel)]="colaborador.pasaporte" required> -->
+                      <label class="form-check-label" for="pasaporteS">Sí</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="pasaporte" id="pasaporteN" value="0"
+                        (click)="disableTextBoxPas()" ngModel #pasaporte="ngModel" [(ngModel)]="colaborador.pasaporte">
+                      <!-- <input class="form-check-input" type="radio" name="pasaporte" id="pasaporteN"
+                        value="0" (click)="disableTextBoxPas()" ngModel
+                        #pasaporte="ngModel" [(ngModel)]="colaborador.pasaporte" required > -->
+                      <label class="form-check-label" for="pasaporteN">No</label>
+                    </div>
+                  </div>
+                  <div *ngIf="pasaporte.invalid && (pasaporte.dirty || pasaporte.touched)" class="alert">
+                    <!-- <div *ngIf="pasaporte.errors?.required">
+                        El campo es obligatorio.
+                      </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <label for="pasaporteNum" class="form-label">Número de Pasaporte</label>
+                <input type="text" class="form-control" id="pasaporteNum" name="pasaporteNum" ngModel
+                  #pasaporteNum="ngModel" [(ngModel)]="colaborador.pasaporteNumero" disabled="disabled"
+                  [disabled]="textBoxDisabledPas">
+              </div>
+              <div class="col-md-4">
+                <label for="pasaporteExp" class="form-label">Expiración</label>
+                <input type="date" class="form-control" id="fechaexppasaporte" name="pasaporteExp" value="dd-MM-yyyy"
+                  ngModel #pasaporteExp="ngModel" [(ngModel)]="colaborador.expiracionPasaporte" disabled="disabled"
+                  [disabled]="textBoxDisabledPas">
+              </div>
+            </div>
+            <div class="row" *ngIf="!archivosDescargaPasaporte; else descargarArchivoPasaporte">
+              <div class="col-md-12 mt-3">
+                <label for="pasaporteImg" class="form-label">Imagen del Pasaporte</label>
+                <input class="form-control-file" type="file" id="pasaporteImg" name="pasaporteImg"
+                  accept=".png, .jpg, .jpeg" (change)="onPasaporte($event.target.files)" #pasaporteUpload
+                  disabled="disabled" [disabled]="textBoxDisabledPas">
+              </div>
+            </div>
+            <ng-template #descargarArchivoPasaporte>
+              <div class="row">
+                <div class="col-md-6 mt-3">
+                  <label for="pasaporteImg" class="form-label">Cambiar Imagen del Pasaporte</label>
+                  <input class="form-control-file" type="file" id="pasaporteImg" name="pasaporteImg"
+                    accept=".png, .jpg, .jpeg" (change)="onPasaporte($event.target.files)" #pasaporteUpload
+                    disabled="disabled" [disabled]="textBoxDisabledPas">
+                </div>
+                <div class="col-md-6 my-auto">
+                  <button type="button" class="btn btn-primary" (click)="downloadBase64FilePasaporte()">Descargar
+                    Pasaporte</button>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <p>¿Está dispuesto(a) a hacerle de comer al paciente si así lo requiere?</p>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <div class="form-control">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="hacerComer" id="hacerComerS" value="1" ngModel
+                    #hacerComer="ngModel" [(ngModel)]="colaborador.hacerComer">
+                  <label class="form-check-label" for="hacerComerS">Sí</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="hacerComer" id="hacerComerN" value="0" ngModel
+                    #hacerComer="ngModel" [(ngModel)]="colaborador.hacerComer">
+                  <label class="form-check-label" for="hacerComerN">No</label>
+                </div>
+
+              </div>
+              <div *ngIf="hacerComer.invalid && (hacerComer.dirty || hacerComer.touched)" class="alert">
+                <!-- <div *ngIf="hacerComer.errors?.required">
+                    El campo es obligatorio.
+                  </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <p>¿Está dispuesto(a) a limpiar lo utilizado en utensilios de cocina ocupados?</p>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <div class="form-control">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="limpiarUtensiliosCocina"
+                    id="limpiarUtensiliosCocinaS" value="1" ngModel #limpiarUtensiliosCocina="ngModel"
+                    [(ngModel)]="colaborador.limpiarUtensiliosCocina">
+                  <label class="form-check-label" for="limpiarUtensiliosCocinaS">Sí</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="limpiarUtensiliosCocina"
+                    id="limpiarUtensiliosCocinaN" value="0" ngModel #limpiarUtensiliosCocina="ngModel"
+                    [(ngModel)]="colaborador.limpiarUtensiliosCocina">
+                  <label class="form-check-label" for="limpiarUtensiliosCocinaN">No</label>
+                </div>
+
+              </div>
+              <div
+                *ngIf="limpiarUtensiliosCocina.invalid && (limpiarUtensiliosCocina.dirty || limpiarUtensiliosCocina.touched)"
+                class="alert">
+                <!-- <div *ngIf="limpiarUtensiliosCocina.errors?.required">
+                    El campo es obligatorio.
+                  </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <p>¿Está dispuesto(a) a limpiar el dormitorio del paciente si así lo requiere?</p>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <div class="form-control">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="limpiarDormitorio" id="limpiarDormitorioS"
+                    value="1" ngModel #limpiarDormitorio="ngModel" [(ngModel)]="colaborador.limpiarDormitorio">
+                  <label class="form-check-label" for="limpiarDormitorioS">Sí</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="limpiarDormitorio" id="limpiarDormitorioN"
+                    value="0" ngModel #limpiarDormitorio="ngModel" [(ngModel)]="colaborador.limpiarDormitorio">
+                  <label class="form-check-label" for="limpiarDormitorioN">No</label>
+                </div>
+
+              </div>
+              <div *ngIf="limpiarDormitorio.invalid && (limpiarDormitorio.dirty || limpiarDormitorio.touched)"
+                class="alert">
+                <!-- <div *ngIf="limpiarDormitorio.errors?.required">
+                    El campo es obligatorio.
+                  </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <p>¿Está dispuesto(a) a limpiar el baño del paciente si así lo requiere?</p>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <div class="form-control">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="limpiarBano" id="limpiarBanoS" value="1" ngModel
+                    #limpiarBano="ngModel" [(ngModel)]="colaborador.limpiarBano">
+                  <label class="form-check-label" for="limpiarBanoS">Sí</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="limpiarBano" id="limpiarBanoN" value="0" ngModel
+                    #limpiarBano="ngModel" [(ngModel)]="colaborador.limpiarBano">
+                  <label class="form-check-label" for="limpiarBanoN">No</label>
+                </div>
+
+              </div>
+              <div *ngIf="limpiarBano.invalid && (limpiarBano.dirty || limpiarBano.touched)" class="alert">
+                <!-- <div *ngIf="limpiarBano.errors?.required">
+                    El campo es obligatorio.
+                  </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <p>¿Está dispuesto(a) a ayudar al paciente en el baño, regadera, cama, y cambiar el pañal si así lo
+              requiere?</p>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <div class="form-control">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="ayudaPaciente" id="ayudaPacienteS" value="1"
+                    ngModel #ayudaPaciente="ngModel" [(ngModel)]="colaborador.ayudaPaciente">
+                  <label class="form-check-label" for="ayudaPacienteS">Sí</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="ayudaPaciente" id="ayudaPacienteN" value="0"
+                    ngModel #ayudaPaciente="ngModel" [(ngModel)]="colaborador.ayudaPaciente">
+                  <label class="form-check-label" for="ayudaPacienteN">No</label>
+                </div>
+
+              </div>
+              <div *ngIf="ayudaPaciente.invalid && (ayudaPaciente.dirty || ayudaPaciente.touched)" class="alert">
+                <!-- <div *ngIf="ayudaPaciente.errors?.required">
+                    El campo es obligatorio.
+                  </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12"><span class="font-italic">Los campos con </span><span
+              class="text-danger font-italic">*</span><span class="font-italic"> son obligatorios</span></div>
+        </div>
+        <!-- <div class="container bg-white rounded-bottom shadow"> -->
+        <!-- <div class="row text-center pb-4">
+          <div class="col"> -->
+            <!-- <button type="button" class="btn btn-primary" (click)="guardarColaborador(myForm)"> Grabar Colaborador -->
+            <!-- </button> -->
+            <!-- Comentar boton de arriba al finalizar. Descomentar el boton de abajo para que inhabilite el boton si existe algun error en algun campo. -->
+            <!-- <button type="button" [disabled]="!myForm.form.valid || curpExiste" class="btn btn-primary" (click)="guardarColaborador(myForm)"> Grabar Colaborador </button>
+          </div>
+        </div> -->
+        <!-- </div> -->
+      </div>
+
+    </mat-tab>
+    <mat-tab label="Historial de Servicios">
+      <div class="container mt-5 bg-white rounded-top shadow">
+        <h4 class="pt-4 pb-1">Historial de Servicios</h4>
+        <div class="form-group dynamic-element1">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row pt-3 pb-3">
+                <div class="col-md-6">
+                  <label for="fechaHistorialServicio" class="form-label">Fecha<span class="text-danger"> *</span></label>
+                    <input type="date" class="form-control" id="fechaHistorialServicio" name="fechaHistorialServicio" value="yyyy-MM-dd" [(ngModel)]="historialServicio.fechaHistorialServicio" ngModel #fechaHistorialServicio="ngModel">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="responsableHistorialServicio" class="form-label">Responsable</label>
+                  <input type="text" class="form-control" name="responsableHistorialServicio" [(ngModel)]="historialServicio.responsableHistorialServicio" ngModel #responsableHistorialServicio="ngModel">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="observacionesHistorialServicio" class="form-label">Observaciones</label>
+              <textarea name="observacionesHistorialServicio" class="form-control" rows="6" ngModel #observacionesHistorialServicio="ngModel" [(ngModel)]="historialServicio.observacionesHistorialServicio"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-container">
+          <div class="dynamic-stuff1">
+            <!-- Dynamic element will be cloned here -->
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-md-12 text-center">
+            <button *ngIf="!colaborador.idColaborador" class="btn btn-primary add-one" (click)="agregarHistorialServicio1()">Agregar</button>
+            <button *ngIf="colaborador.idColaborador" class="btn btn-primary add-one" (click)="agregarHistorialServicioExistente()">Agregar</button>
+            <button class="btn btn-warning delete ml-3" (click)="limpiarHistorialServicio()">Cancelar</button>
+          </div>
+        </div>
+        <hr class="mt-3 mb-3" />
+        <div class="row mt-4 pb-4">
+          <div class="col-md-12 text-center">
+            <table mat-table [dataSource]="historialServicioSource" #historialServicioTable class="mat-elevation-z8">
+              <ng-container matColumnDef="fecha">
+                <th mat-header-cell *matHeaderCellDef> Fecha </th>
+                <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="responsable">
+                <th mat-header-cell *matHeaderCellDef> Responsable </th>
+                <td mat-cell *matCellDef="let element"> {{element.responsable}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="observaciones">
+                <th mat-header-cell *matHeaderCellDef> Observaciones </th>
+                <td mat-cell *matCellDef="let element"> {{element.observaciones}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="deleteHistorialServicio">
+                <th mat-header-cell *matHeaderCellDef> Acci&oacute;n </th>
+                <td mat-cell *matCellDef="let element">
+                  <button *ngIf="!colaborador.idColaborador" class="btn btn-danger" (click)="borraHistorialServicio(element)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  <button *ngIf="colaborador.idColaborador" class="btn btn-danger" (click)="borraHistorialServicioExistente(element)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="historialServicioColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: historialServicioColumns;"></tr>
+            </table>
+
+
+          </div>
+        </div>
+        <div class="row text-center pb-4">
+          <div class="col">
+            <!-- <button type="button" class="btn btn-primary" (click)="guardarColaborador(myForm)"> Grabar Colaborador -->
+            <!-- </button> -->
+            <!-- Comentar boton de arriba al finalizar. Descomentar el boton de abajo para que inhabilite el boton si existe algun error en algun campo. -->
+            <button type="button" [disabled]="!myForm.form.valid || curpExiste" class="btn btn-primary" (click)="guardarColaborador(myForm)"> Grabar Colaborador </button>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+  <div class="container bg-white rounded-bottom shadow">
+    <div class="row text-center pb-4">
+
+      <div class="col">
+        <div class="btn-toolbar" role="toolbar" style="justify-content: center; display: flex;">
+          <div class="btn-group mr-2">
+            <button type="button" class="btn btn-primary" [formControl]="selected" (click)="pagAtras(1)">&lt;</button>
+          </div>
+          <div class="btn-group mr-2">
+            <button type="button" class="btn btn-primary" [formControl]="selected" (click)="pagDelante(1)">&gt;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>
+<!-- </div> -->

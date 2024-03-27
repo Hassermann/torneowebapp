@@ -1,0 +1,18 @@
+
+<div class="container mt-5 bg-white rounded shadow">
+
+    <h2 class="pt-4 pb-1">Menú</h2>
+    <div class="row pb-4">
+        <div class="col-md-12 text-center">
+            <button type="button" class="btn btn-success btn-lg mx-5" (click)="botonAltaServicios()"><h1 style=font-size:4em><fa-icon [icon]="faUserPlus"></fa-icon></h1> Agregar persona</button>
+            <button type="button" class="btn btn-warning btn-lg mx-5" (click)="botonGestionServicios()"><h1 style=font-size:4em><fa-icon [icon]="faUserCog"></fa-icon></h1> Consultar personas</button>
+            <button type="button" class="btn btn-success btn-lg mx-5"><h1 style=font-size:4em><fa-icon [icon]="faCalendarPlus"></fa-icon></h1>Agregar evento</button>
+        </div>
+    </div>
+    <div class="row pb-4">
+        <div class="col-md-12 text-center">
+            <button type="button" class="btn btn-warning btn-lg mx-5" (click)="botonPagoPaciente()"><h1 style=font-size:4em><fa-icon [icon]="faCalendarWeek"></fa-icon></h1>Consultar eventos</button>
+            <button type="button" class="btn btn-success btn-lg mx-5"  (click)="botonGestionPago()"><h1 style=font-size:4em><fa-icon [icon]="faCalendarCheck"></fa-icon></h1>Checkin a Evento</button>
+        </div>
+    </div>
+</div>

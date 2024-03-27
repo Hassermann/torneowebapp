@@ -1,0 +1,326 @@
+
+<form style="background: #00D8D6; background: linear-gradient(to right, #00D8D6, #6EC1E4);" #myForm="ngForm">
+    <ngb-toast-container></ngb-toast-container>
+    <mat-tab-group mat-align-tabs="center" [selectedIndex]="selected.value"
+        (selectedIndexChange)="selected.setValue($event)">
+        
+        <mat-tab label="Informacion General y Dirección">
+            <div class="container mt-5 bg-white rounded-top shadow">
+                
+                <h4 class="pt-4 pb-1">Información General - Cliente Moral</h4>
+                <div class="row">
+                    <div class="col">
+                        <label for="nombre" class="form-label">Nombre de la empresa<span class="text-danger"> *</span></label>
+                        <input type="text" class="form-control valGlobal" id="nombre" name="nombre" ngModel #nombre="ngModel" [(ngModel)]="cliente.nombre">
+                        <!-- <input type="text" class="form-control valGlobal" id="nombre" name="nombre" ngModel #nombre="ngModel"
+                [(ngModel)]="cliente.nombre" pattern="[a-zA-Z ]*" required> -->
+
+                    </div>
+
+                    <div class="col">
+                        <label for="rfc" class="form-label">RFC<span class="text-danger">
+                                *</span></label>
+                        <input type="text" maxlength="11" class="form-control valGlobal" id="rfc" name="rfc" ngModel
+                        #rfc="ngModel" [(ngModel)]="cliente.rfc"
+                            >
+                        <!-- <input type="text" class="form-control valGlobal" id="apaterno" name="apaterno" ngModel #apaterno="ngModel"
+                [(ngModel)]="cliente.a_paterno" pattern="[a-zA-Z ]*" required> -->
+
+                    </div>
+                </div>
+
+                <hr class="py-1" />
+                
+                <h4 class="pb-1">Dirección</h4>
+                <div class="row">
+                    <div class="col">
+                        <label for="calle" class="form-label">Calle<span class="text-danger"> *</span></label>
+                        <input type="text" class="form-control" id="calle1" name="calle1" ngModel #calle1="ngModel"
+                        [(ngModel)]="cliente.calle1">
+                        <!-- <input type="text" class="form-control" id="calle1" name="calle1" ngModel #calle1="ngModel" [(ngModel)]="cliente.calle1" required> -->
+
+                    </div>
+
+                    <div class="col">
+                        <label for="calle2" class="form-label">Calle 2</label>
+                        <input type="text" class="form-control" id="calle1" name="calle2" ngModel #calle2="ngModel"
+                        [(ngModel)]="cliente.calle2">
+                    </div>
+                </div>
+                <div class="row mt-4">
+                <div class="col-md-2">
+                    <label for="telefono1" class="form-label">Teléfono 1<span class="text-danger"> *</span></label>
+                    <input maxlength="10" size="10" type="tel" class="form-control" name="telefono1" ngModel
+                      #telefono1="ngModel" [(ngModel)]="cliente.telefono" placeholder="10 Dígitos" pattern="[0-9]*"
+                      minlength="10">
+                    <!-- <input maxlength="10" size="10" type="tel" class="form-control" name="telefono1" ngModel #telefono1="ngModel" [(ngModel)]="cliente.telefono" placeholder="10 Dígitos" pattern="[0-9]*" minlength="10" required> -->
+                    <div *ngIf="telefono1.invalid && (telefono1.dirty || telefono1.touched)" class="alert">
+                      <!-- <div *ngIf="telefono1.errors?.required">
+                          El telefono es obligatorio.
+                        </div> -->
+                      <div *ngIf="telefono1.errors?.pattern">
+                        El telefono debe contener solamente numeros.
+                      </div>
+                      <div *ngIf="telefono1.errors?.minlength">
+                        El telefono debe contener 10 digitos.
+                      </div>
+                    </div>
+                  </div>
+        
+                  <div class="col-md-2">
+                    <label for="tipoTel1" class="form-label">Tipo de Teléfono 1</label>
+                    <select class="form-control" name="tipoTel1" ngModel #tipoTel1="ngModel"
+                      [ngModel]="cliente.idTipoTelefono" (change)="onTipoTel1($event.target.value)">
+                      <option value="" selected disabled hidden>Seleccionar</option>
+                      <option *ngFor="let tipoTelefono of tiposTelefono" [value]="tipoTelefono.idTipoTel">
+                        {{tipoTelefono.nombre}}
+                      </option>
+                    </select>
+                  </div>
+        
+                  <div class="col-md-2">
+                    <label for="telefono2" class="form-label">Teléfono 2</label>
+                    <input maxlength="10" size="10" type="tel" class="form-control" name="telefono2" ngModel
+                      #telefono2="ngModel" [(ngModel)]="cliente.telefono2" placeholder="10 Dígitos" pattern="[0-9]*"
+                      minlength="10">
+                    <div *ngIf="telefono2.invalid && (telefono2.dirty || telefono2.touched)" class="alert">
+                      <div *ngIf="telefono2.errors?.pattern">
+                        El telefono debe contener solamente numeros.
+                      </div>
+                      <div *ngIf="telefono2.errors?.minlength">
+                        El telefono debe contener 10 digitos.
+                      </div>
+                    </div>
+                  </div>
+        
+                  <div class="col-md-2">
+                    <label for="tipoTel2" class="form-label">Tipo de Teléfono 2</label>
+                    <select class="form-control" name="tipoTel2" ngModel #tipoTel2="ngModel"
+                      [ngModel]="cliente.idTipoTelefono2" (change)="onTipoTel2($event.target.value)">
+                      <option value="" selected disabled hidden>Seleccionar</option>
+                      <option *ngFor="let tipoTelefono of tiposTelefono" [value]="tipoTelefono.idTipoTel">
+                        {{tipoTelefono.nombre}}
+                      </option>
+                    </select>
+                  </div>
+        
+                  <div class="col-md-2">
+                    <label for="numExterior" class="form-label">Número Exterior<span class="text-danger">
+                            *</span></label>
+                    <input type="text" class="form-control" name="numExterior" ngModel #numExterior="ngModel"
+                    [(ngModel)]="cliente.noExt">
+                </div>
+
+                <div class="col-md-2">
+                    <label for="numInterior" class="form-label">Número Interior</label>
+                    <input type="text" class="form-control" name="numInterior" ngModel #numInterior="ngModel"
+                    [(ngModel)]="cliente.noInt">
+                </div>
+                    
+                </div>
+                <div class="row mt-4">
+                
+
+                <div class="col-md-2">
+                    <label for="codigoPostal" class="form-label">Código Postal<span class="text-danger">
+                            *</span></label>
+                    <input type="text" class="form-control" maxlength="5" name="codigopostal" [ngModel]="selectedCodigoPostal"
+                    (change)="onCodigoPostal($event.target.value)" [(ngModel)]="cliente.codigoPostal" #codigoPostal="ngModel" pattern="[0-9]*">
+
+                </div>
+                <div class="col">
+                    <label for="colonia" class="form-label">Colonia<span class="text-danger"> *</span></label>
+                    <select class="form-control" name="colonia" ngModel #colonia="ngModel"  [(ngModel)]="cliente.idColonia"
+                    (change)="onColonia($event.target.value)">
+                        <option *ngFor="let colonia of colonias" [value]="colonia.idColonia">
+                            {{colonia.nombre}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        <label for="ciudad" class="form-label">Ciudad<span class="text-danger"> *</span></label>
+                        <select class="form-control" name="ciudad" (change)="onCiudad($event.target.value)">
+                            <option *ngFor="let ciudad of ciudadesDir" [value]="ciudad.idCiudad">
+                                {{ciudad.nombre}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <label for="estado" class="form-label">Estado<span class="text-danger"> *</span></label>
+                        <select class="form-control" name="estado" (change)="onEstado($event.target.value)" >
+                            <option *ngFor="let estado of estadosDir" [value]="estado.idEstado">
+                                {{estado.nombre}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <label for="pais" class="form-label">País<span class="text-danger"> *</span></label>
+                        <select class="form-control" name="pais">
+                            <option *ngFor="let pais of paises" [value]="pais.idPais">
+                                {{pais.nombre}}
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="row mt-4 pb-4">
+                    <div class="col">
+                        <label for="referencia" class="form-label">Referencia</label>
+                        <textarea name="referencia" class="form-control" ngModel #referencia="ngModel"
+                        [(ngModel)]="cliente.referencia" rows="3" maxlength="65535"></textarea>
+                    </div>
+
+                    
+                </div>
+                <div class="row pb-4">
+                    <div class="col-md-12"><span class="font-italic">Los campos con </span><span
+                            class="text-danger font-italic">*</span><span class="font-italic"> son obligatorios</span>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        
+        <mat-tab label="Contactos">
+            <div class="container mt-5 bg-white rounded-top shadow">
+                <h4 class="pt-4 pb-1">Contactos</h4>
+                <h6 class="pb-1">Favor de capturar los contactos de referencia
+                </h6>
+                <div class="row mt-4 pb-4">
+                    <div class="col">
+                        <label for="nacimiento" class="form-label">Nombre completo<span class="text-danger">
+                                *</span></label>
+                        <input type="text" class="form-control valGlobal" id="nombreContacto" name="nombreContacto" [(ngModel)]="contacto.nombre" ngModel
+                        #nombreContacto="ngModel"
+                        pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+">
+                        <!-- <input type="date" class="form-control" id="fechanacimiento" name="fechanacimiento" value="yyyy-MM-dd" ngModel
+                #fechanacimiento="ngModel" [(ngModel)]="cliente.fecha_nacimiento" required> -->
+
+
+                    </div>
+                    <div class="col-md-2">
+                        <label for="idParentescoContacto" class="form-label">Parentesco</label>
+                        <select class="form-control" name="idParentescoContacto" ngModel #idParentescoContacto="ngModel" [(ngModel)]="contacto.parentesco"
+                         (change)="onParentescoContacto($event.target.value)">
+                            <option value="Seleccionar" selected disabled>Seleccionar</option>
+                            <option *ngFor="let parentesco of parentescos" [value]="parentesco.idParentesco">
+                                {{parentesco.nombre}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="telefonoContacto" class="form-label">Telefono<span class="text-danger"> *</span></label>
+                        <input maxlength="10" size="10" type="tel" class="form-control" name="telefonoContacto"
+                            placeholder="10 Dígitos" [(ngModel)]="contacto.telefono" ngModel
+                            #telefonoContacto="ngModel" pattern="[0-9]*" minlength="10">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="tipoTelContact" class="form-label">Tipo de Teléfono</label>
+                        <select class="form-control" name="tipoTelContact" ngModel #tipoTelContacto="ngModel" [(ngModel)]="contacto.tipoTelefono"
+                        (change)="onTipoTelContacto($event.target.value)">
+                            <option value="" selected disabled hidden>Seleccionar</option>
+                            <option *ngFor="let tipoTelefono of tiposTelefono" [value]="tipoTelefono.idTipoTel">
+                                {{tipoTelefono.nombre}}
+                              </option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="correoElectronicoContacto" class="form-label">Correo Electrónico<span class="text-danger">
+                                *</span></label>
+                        <input type="email" class="form-control" name="correoElectronicoContacto" [(ngModel)]="contacto.correoElectronico" ngModel
+                        #correoElectronicoContacto="ngModel"
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+
+                    </div>
+
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-12 text-center">
+                      <button class="btn btn-primary add-one" (click)="agregarContacto(null)">Agregar Otro</button>
+                      <button class="btn btn-warning delete ml-3" >Cancelar</button>
+                    </div>
+                  </div>
+                  <hr class="mt-3 mb-3" />
+                  <div class="row mt-4 pb-4">
+                    <div class="col-md-12 text-center">
+                      <table mat-table [dataSource]="contactoSource" #contactosTable  class="mat-elevation-z8">
+                        <ng-container matColumnDef="nombre">
+                          <th mat-header-cell *matHeaderCellDef> Nombre completo </th>
+                          <td mat-cell *matCellDef="let element">{{element.nombre}}</td>
+                        </ng-container>
+          
+                        <ng-container matColumnDef="parentesco">
+                          <th mat-header-cell *matHeaderCellDef> Parentesco</th>
+                          <td mat-cell *matCellDef="let element"> {{element.parentesco.nombre}} </td>
+                        </ng-container>
+          
+                        <ng-container matColumnDef="telefono">
+                          <th mat-header-cell *matHeaderCellDef> Telefono </th>
+                          <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
+                        </ng-container>
+          
+                        <ng-container matColumnDef="tipoTelefono">
+                          <th mat-header-cell *matHeaderCellDef> Tipo de telefono </th>
+                          <td mat-cell *matCellDef="let element"> {{element.tipoTelefono.nombre}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="correoElectronico">
+                            <th mat-header-cell *matHeaderCellDef> Correo electronico </th>
+                            <td mat-cell *matCellDef="let element"> {{element.correoElectronico}} </td>
+                          </ng-container>
+          
+                        <ng-container matColumnDef="deleteContacto">
+                          <th mat-header-cell *matHeaderCellDef> Accion </th>
+                          <td mat-cell *matCellDef="let element">
+                            <button class="btn btn-danger" color="danger" (click)="borraContacto(element)">
+                              <mat-icon>delete</mat-icon>
+                            </button>
+                          </td>
+                        </ng-container>
+          
+                        <tr mat-header-row *matHeaderRowDef="contactosColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: contactosColumns;"></tr>
+                      </table>
+                    </div>
+                  </div>
+
+                <div class="row pb-4">
+                    <div class="col-md-12"><span class="font-italic">Los campos con </span><span
+                            class="text-danger font-italic">*</span><span class="font-italic"> son obligatorios</span>
+                    </div>
+                </div>
+                <div class="row text-center pb-4">
+                    <div class="col">
+                      <button *ngIf="!idCliente" type="button" class="btn btn-primary" (click)="guardarCliente(myForm)"> Enviar Datos
+                      </button>
+                      <button *ngIf="idCliente" type="button" class="btn btn-primary" (click)="editarCliente(myForm)">Editar Datos</button>
+                      <!-- Comentar boton de arriba al finalizar. Descomentar el boton de abajo para que inhabilite el boton si existe algun error en algun campo. -->
+                      <!-- <button type="button" [disabled]="!myForm.form.valid" class="btn btn-primary" (click)="guardarCliente(myForm)"> Grabar Cliente </button> -->
+                    </div>
+                  </div>
+            </div>
+        </mat-tab>
+        
+    </mat-tab-group>
+    <div class="container bg-white rounded-bottom shadow">
+        <div class="row text-center pb-4">
+
+            <div class="col">
+                <div class="btn-toolbar" role="toolbar" style="justify-content: center; display: flex;">
+                    <div class="btn-group mr-2">
+                        <button type="button" class="btn btn-primary" ngDefaultControl [formControl]="selected"
+                            (click)="pagAtras(1)">&lt;</button>
+                    </div>
+                    <div class="btn-group mr-2">
+                        <button type="button" class="btn btn-primary" ngDefaultControl [formControl]="selected"
+                            (click)="pagDelante(1)">&gt;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
