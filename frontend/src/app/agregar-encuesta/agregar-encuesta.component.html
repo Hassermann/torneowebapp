@@ -1,0 +1,206 @@
+<div class="container text-center" style="padding-top: 10px;">
+    <form #myForm="ngForm">
+        <div *ngIf="showAlert" class="alert alert-success" role="alert">
+            Datos guardados con éxito
+          </div>
+        <mat-tab-group mat-align-tabs="center" [selectedIndex]="selected.value"
+    (selectedIndexChange)="selected.setValue($event)">
+            <mat-tab label="Datos personales">
+                <div class="container ">
+                    <h2 class="pt-4 pb-1">Datos del Solicitante</h2>
+                    <div class="row" style="padding-bottom: 10px;">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="text">Nombre:</label>
+                                <input type="text" class="form-control" [(ngModel)]="encuestado.nombre" name="nombre" placeholder="Pedro Lopez">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="text">Apodo:</label>
+                                <input type="text" class="form-control" [(ngModel)]="encuestado.apodo" name="apodo" placeholder="El negro">
+                            </div>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div class="row"  style="padding-bottom: 10px;">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="text">Pandilla:</label>
+                                <select class="form-control" [(ngModel)]="encuestado.id_pandilla" name="pandilla">
+                                    <option *ngFor="let pandillaOption of pandillaList" [value]="pandillaOption.id_pandilla">{{ pandillaOption.nombre }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="text">Edad:</label>
+                                <input type="text" class="form-control"  [(ngModel)]="encuestado.edad" name="edad" placeholder="15">
+                            </div>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div class="row"  style="padding-bottom: 10px;">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="text">Sexo:</label>
+                                <select class="form-control"  [(ngModel)]="encuestado.sexo" name="sexo">
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Femenino">Femenino</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="text">Estado Civil:</label>
+                                <select class="form-control"  [(ngModel)]="encuestado.id_estadocivil" name="estadoCivil">
+                                    <option *ngFor="let civilOption of civilList" [value]="civilOption.id_catalogo">{{ civilOption.nombre }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div class="row"  style="padding-bottom: 10px;">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="text">Vivienda:</label>
+                                <select class="form-control" [(ngModel)]="encuestado.id_vivienda" name="vivienda">
+                                    <option *ngFor="let viviendaOption of viviendaList" [value]="viviendaOption.id_catalogo">{{ viviendaOption.nombre }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="text">Escolaridad:</label>
+                                <select class="form-control" [(ngModel)]="encuestado.id_escolaridad" name="escolaridad">
+                                    <option *ngFor="let escolaridadOption of escolaridadList" [value]="escolaridadOption.id_catalogo">{{ escolaridadOption.nombre }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div class="row"  style="padding-bottom: 10px;">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="text">Situación Laboral:</label>
+                                <select class="form-control" [(ngModel)]="encuestado.id_laboral" name="situacionLaboral">
+                                    <option *ngFor="let laboralOption of laboralList" [value]="laboralOption.id_catalogo">{{ laboralOption.nombre }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="text">Tipo de Vivienda:</label>
+                                <input type="text" class="form-control" [(ngModel)]="encuestado.tipo_vivienda" name="tipo_vivienda" placeholder="Casa">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </mat-tab>
+        <mat-tab label="Información adicional">
+            <div class="container">
+                <h2 class="pt-4 pb-1">Información adicional</h2>
+                <div class="row"  style="padding-bottom: 10px;">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="text">¿Cuentas con algun apoyo de un familiar o asociación?:</label>
+                            <input type="text" class="form-control" [(ngModel)]="encuestado.apoyo_familiar" name="apoyo_familiar" placeholder=" ">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="text">¿Por qué razón decidiste ingresar a las pandillas?:</label>
+                            <input type="text" class="form-control" [(ngModel)]="encuestado.pandilla_ingreso" name="pandilla_ingreso" placeholder=" ">
+                        </div>
+                    </div>
+                </div>
+
+                <mat-divider></mat-divider>
+                <div class="row"  style="padding-bottom: 10px;">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="text">¿Sabes cómo y cuándo tu pandilla se fundó?:</label>
+                            <input type="text" class="form-control" [(ngModel)]="encuestado.fundacion_pandilla" name="fundacion_pandilla" placeholder=" ">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="text">Menciona actividades realizadas por la pandilla:</label>
+                            <input type="text" class="form-control" [(ngModel)]="encuestado.actividad_pandilla" name="actividad_pandilla" placeholder="Trabajar, Ir a fiestas, etc.">
+                        </div>
+                    </div>
+                </div>
+
+                <mat-divider></mat-divider>
+                <div class="row"  style="padding-bottom: 10px;">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="text">¿En qué tipo de lugar se reunían?:</label>
+                            <input type="text" class="form-control" [(ngModel)]="encuestado.lugar_pandilla" name="lugar_pandilla" placeholder="Casa, plaza, etc.">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="text">¿Cuáles fueron tus razones para dejar las pandillas?:</label>
+                            <input type="text" class="form-control" [(ngModel)]="encuestado.razon_pandilla" name="razon_pandilla" placeholder=" ">
+                        </div>
+                    </div>
+                </div>
+
+                <mat-divider></mat-divider>
+                <div class="row"  style="padding-bottom: 10px;">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="text">¿Hay miembros que actualmente ya no estén activos?:</label>
+                            <input type="text" class="form-control" [(ngModel)]="encuestado.miembros_pandilla" name="miembros_pandilla" placeholder="Encarcelamiento, defunción, etc.">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="text">Actualmente ¿Tienes adicciones:</label>
+                            <input type="text" class="form-control" [(ngModel)]="encuestado.adicciones" name="adicciones" placeholder=" ">
+                        </div>
+                    </div>
+                </div>
+
+                <mat-divider></mat-divider>
+                <div class="row"  style="padding-bottom: 10px;">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="text">¿Ha influido R.N. en tí?:</label>
+                            <input type="text" class="form-control" [(ngModel)]="encuestado.influir_rn" name="influir_rn" placeholder=" ">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="text">Menciona cambios que R.N. debería hacer:</label>
+                            <input type="text" class="form-control" [(ngModel)]="encuestado.cambios_rn" name="cambios_rn" placeholder=" ">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 10px;">
+                <div class="col" style="text-align: center !important;"><button type="button" class="btn btn-warning" (click)="navigateToInicio()">Cancelar</button></div>
+                <div class="col" style="text-align: center !important;" *ngIf="!id_encuestado"><button type="submit" class="btn btn-primary" (click)="guardar()">Guardar</button></div>
+            </div>
+        </mat-tab>
+        </mat-tab-group>
+        <div class="container bg-white rounded-bottom shadow">
+            <div class="row text-center pb-4">
+              <div class="col">
+                <div class="btn-toolbar" role="toolbar" style="justify-content: center; display: flex;">
+                  <div class="btn-group mr-2" style="padding-right: 15px;">
+                    <button type="button" class="btn btn-primary"  (click)="pagAtras(1)">&lt;</button>
+                  </div>
+                  <div class="btn-group mr-2" style="padding-left: 15px;">
+                    <button type="button" class="btn btn-primary" (click)="pagDelante(1)">&gt;</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </form>
+</div>

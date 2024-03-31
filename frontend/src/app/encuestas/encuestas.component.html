@@ -1,0 +1,41 @@
+<div class="container text-center" style="padding-top: 10px;">
+    <button mat-icon-button color="primary" (click)="volver()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>Encuestas Realizadas</h1>
+    
+    <mat-table [dataSource]="encuestas" class="mat-elevation-z8">
+
+        <!-- Define las columnas de la tabla -->
+        <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+            <mat-cell *matCellDef="let encuesta"> {{encuesta.nombre}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="apodo">
+            <mat-header-cell *matHeaderCellDef> Apodo </mat-header-cell>
+            <mat-cell *matCellDef="let encuesta"> {{encuesta.apodo}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="edad">
+            <mat-header-cell *matHeaderCellDef> Edad </mat-header-cell>
+            <mat-cell *matCellDef="let encuesta"> {{encuesta.edad}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="sexo">
+            <mat-header-cell *matHeaderCellDef> Sexo </mat-header-cell>
+            <mat-cell *matCellDef="let encuesta"> {{encuesta.sexo}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="ver">
+            <mat-header-cell *matHeaderCellDef> Ver </mat-header-cell>
+            <mat-cell *matCellDef="let encuesta"> 
+            <button mat-icon-button color="primary" (click)="verEncuesta(encuesta)">
+                <mat-icon>visibility</mat-icon>
+            </button>
+            </mat-cell>
+          </ng-container>
+        <!-- Agrega más columnas según sea necesario -->
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
