@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatIconModule} from '@angular/material/icon';
+import { PandillasComponent } from './pandillas/pandillas.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {MatIconModule} from '@angular/material/icon';
     EncabezadoComponent,
     InicioComponent,
     EncuestasComponent,
-    AgregarEncuestaComponent
+    AgregarEncuestaComponent,
+    PandillasComponent
   ],
   imports: [
     BrowserModule,

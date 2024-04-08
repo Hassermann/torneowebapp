@@ -1,22 +1,14 @@
 
-<div class="container text-center" style="padding-top: 10px;">
-    <div class="row">
-        <div class="col">
-            <button class="btn btn-primary btn-md my-2 mb-2" (click)="navigateToEncuestas()">
-                <i class="fa fa-poll"></i> Encuestas Realizadas
-            </button>
+<div class="container  mt-5 bg-white rounded shadow" style="padding-top: 10px;">
+    <h2 class="pt-4 pb-1 text-center">Menú Principal</h2>
+    <hr/>
+    <div class="row pb-4">
+        <div class="col-md-12 text-center">
+                <button type="button" class="btn btn-primary btn-lg mx-5" (click)="navigateToEncuestas()"><h1 style=font-size:4em><i class="fa fa-poll"></i></h1> Listado de Personas</button>
+                <button type="button" class="btn btn-primary btn-lg mx-5" (click)="navigateToAgregarEncuesta()"><h1 style=font-size:4em><i class="fa fa-poll"></i></h1> Agregar Personas</button> 
+                <button type="button" class="btn btn-primary btn-lg mx-5" (click)="navigateToPandillas()"><h1 style=font-size:4em><i class="fa fa-users"></i></h1> Listado de Pandillas</button>
+                <button type="button" class="btn btn-secondary btn-lg mx-5" ><h1 style=font-size:4em><i class="fa fa-futbol"></i></h1> Eventos</button>
+
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <button class="btn btn-primary btn-md my-2 mb-2" (click)="navigateToAgregarEncuesta()">
-                <i class="fa fa-poll"></i> Agregar Encuesta
-            </button>
-        </div>
-        <div class="col">
-            <button class="btn btn-secondary btn-md my-2 mb-2">
-                <i class="fa fa-users"></i> Eventos
-            </button>
-        </div>
-    </div>
+    </div>   
 </div>

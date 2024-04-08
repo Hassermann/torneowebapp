@@ -18,4 +18,7 @@ export class InicioComponent {
     this.router.navigate(['/agregar-encuesta']);
   }
 
+  navigateToPandillas() {
+    this.router.navigate(['/pandillas']);
+  }
 }
