@@ -2,28 +2,36 @@
     <button class="btn btn-primary btn-md my-2 mb-2" mat-icon-button color="primary" (click)="volver()">
         <mat-icon>arrow_back</mat-icon>
     </button>
-    <h1>Listado de Pandillas</h1>
+    <h1>Eventos</h1>
     
-    <mat-table [dataSource]="pandillas" class="mat-elevation-z8">
+    <mat-table [dataSource]="eventos" class="mat-elevation-z8">
 
         <!-- Define las columnas de la tabla -->
         <ng-container matColumnDef="nombre">
             <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
-            <mat-cell *matCellDef="let encuesta"> {{encuesta.nombre}} </mat-cell>
+            <mat-cell *matCellDef="let evento"> {{evento.nombre}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="inicio">
+            <mat-header-cell *matHeaderCellDef> Inicio</mat-header-cell>
+            <mat-cell *matCellDef="let evento"> {{evento.inicio}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="final">
+            <mat-header-cell *matHeaderCellDef> Final </mat-header-cell>
+            <mat-cell *matCellDef="let evento"> {{evento.final}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="colonia">
+            <mat-header-cell *matHeaderCellDef> Colonia</mat-header-cell>
+            <mat-cell *matCellDef="let evento"> {{evento.colonia}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="ciudad">
             <mat-header-cell *matHeaderCellDef> Ciudad </mat-header-cell>
-            <mat-cell *matCellDef="let encuesta"> {{encuesta.apodo}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="estado">
-            <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
-            <mat-cell *matCellDef="let encuesta"> {{encuesta.edad}} </mat-cell>
+            <mat-cell *matCellDef="let evento"> {{evento.ciudad}} </mat-cell>
         </ng-container>
         
         <ng-container matColumnDef="ver">
             <mat-header-cell *matHeaderCellDef> Ver </mat-header-cell>
-            <mat-cell *matCellDef="let encuesta"> 
-            <button mat-icon-button color="primary" (click)="verEncuesta(encuesta)">
+            <mat-cell *matCellDef="let evento"> 
+            <button mat-icon-button color="primary" (click)="verEvento(evento)">
                 <mat-icon>visibility</mat-icon>
             </button>
             </mat-cell>

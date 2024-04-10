@@ -4,6 +4,8 @@ import { InicioComponent } from './inicio/inicio.component';
 import { AgregarEncuestaComponent } from './agregar-encuesta/agregar-encuesta.component';
 import { EncuestasComponent } from './encuestas/encuestas.component';
 import { PandillasComponent } from './pandillas/pandillas.component';
+import { AgregarPandillaComponent } from './agregar-pandilla/agregar-pandilla.component';
+import { EventosComponent } from './eventos/eventos.component';
 
 const routes: Routes = [
     { path: 'inicio', component: InicioComponent },
@@ -11,6 +13,8 @@ const routes: Routes = [
     { path: 'ver-encuesta', component: AgregarEncuestaComponent },
     { path: 'encuestas', component: EncuestasComponent },
     { path: 'pandillas', component: PandillasComponent },
+    { path: 'agregar-pandillas', component: AgregarPandillaComponent },
+    { path: 'eventos', component: EventosComponent },
     { path: '', redirectTo: '/inicio', pathMatch: 'full' }, // redirect to `inicio-component`
 ];
 

@@ -16,6 +16,8 @@ import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatIconModule} from '@angular/material/icon';
 import { PandillasComponent } from './pandillas/pandillas.component';
+import { AgregarPandillaComponent } from './agregar-pandilla/agregar-pandilla.component';
+import { EventosComponent } from './eventos/eventos.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { PandillasComponent } from './pandillas/pandillas.component';
     InicioComponent,
     EncuestasComponent,
     AgregarEncuestaComponent,
-    PandillasComponent
+    PandillasComponent,
+    AgregarPandillaComponent,
+    EventosComponent
   ],
   imports: [
     BrowserModule,

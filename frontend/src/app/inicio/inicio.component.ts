@@ -21,4 +21,12 @@ export class InicioComponent {
   navigateToPandillas() {
     this.router.navigate(['/pandillas']);
   }
+
+  navigateToAgregarPandillas() {
+    this.router.navigate(['/agregar-pandillas']);
+  }
+
+  navigateToEventos() {
+    this.router.navigate(['/eventos']);
+  }
 }
