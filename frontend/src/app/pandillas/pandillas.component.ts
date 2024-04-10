@@ -14,7 +14,7 @@ import { Pandilla } from '../model/Pandilla';
 export class PandillasComponent implements OnInit {
 
   pandillas = new MatTableDataSource<Pandilla>([]); // Your data as MatTableDataSource
-  displayedColumns: string[] = ['nombre','ciudad','estado','ver']; // Agrega más nombres de columnas según sea necesario
+  displayedColumns: string[] = ['nombre','estado','ciudad','colonia', 'ver']; // Agrega más nombres de columnas según sea necesario
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 

@@ -11,12 +11,16 @@
             <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
             <mat-cell *matCellDef="let encuesta"> {{encuesta.nombre}} </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="estado">
+            <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+            <mat-cell *matCellDef="let encuesta"> {{encuesta.edad}} </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="ciudad">
             <mat-header-cell *matHeaderCellDef> Ciudad </mat-header-cell>
             <mat-cell *matCellDef="let encuesta"> {{encuesta.apodo}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="estado">
-            <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+        </ng-container>       
+        <ng-container matColumnDef="colonia">
+            <mat-header-cell *matHeaderCellDef> Colonia </mat-header-cell>
             <mat-cell *matCellDef="let encuesta"> {{encuesta.edad}} </mat-cell>
         </ng-container>
         
