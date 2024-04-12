@@ -1,0 +1,79 @@
+<div class="container text-center" style="padding-top: 10px;">
+    <h2 class="pt-4 pb-1">Datos del Evento</h2>
+    <div class="row" style="padding-bottom: 10px;">
+        <div class="col">
+            <div class="form-group">
+                <label for="text">Nombre:</label>
+                <input type="text" class="form-control"  name="nombre" placeholder="Vatos Locos vs Terkos">
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="text">Colonia:</label>
+                <select matNativeControl class="form-control" required>
+                    <option value="nuevoleon">Centro</option>
+                
+                  </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="text">Fecha Inicial</label>
+                <input type="date" class="form-control"  name="colonia" placeholder="">
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="text">Hora Inicial</label>
+                <input type="time" class="form-control"  name="colonia" placeholder="">
+            </div>
+        </div>
+       
+    </div>  
+    <hr>  
+    <div class="row" style="padding-bottom: 10px;">
+        <div class="col">
+            <div class="form-group">
+                <label for="text">Fecha Final:</label>
+                <input type="date" class="form-control"  name="colonia" placeholder="">
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="text">Hora Final:</label>
+                <input type="time" class="form-control"  name="colonia" placeholder="">
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="text">Ciudad:</label>
+                <select matNativeControl class="form-control" required>
+                    <option value="nuevoleon">Monterrey</option>
+                    <option value="nuevoleon">Apodaca</option>
+                  </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="text">Estado:</label>
+                <select matNativeControl class="form-control" required>
+                    <option value="nuevoleon">Nuevo León</option>
+                    <option value="nuevoleon">Coahuila</option>
+                  </select>
+            </div>
+        </div>
+    </div> 
+    <div class="row" style="padding-bottom: 10px;">
+        <div class="col">
+            <div class="form-group">
+                <label for="text">Descripción:</label>
+                <input type="text" class="form-control" name="apodo" placeholder="Juego no. 4 de Torneo 2024. Cancha cívica de escuela secuntaria no.4">
+            </div>
+        </div>
+    </div> 
+
+    <div class="row" style="padding-top: 10px;">
+        <div class="col" style="text-align: center !important;"><button type="button" class="btn btn-warning" (click)="navigateToInicio()">Cancelar</button></div>
+        <div class="col" style="text-align: center !important;" ><button type="submit" class="btn btn-primary" >Guardar</button></div>
+    </div>  
+</div>
