@@ -11,10 +11,6 @@
             <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
             <mat-cell *matCellDef="let evento"> {{evento.nombre}} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="descripcion">
-            <mat-header-cell *matHeaderCellDef> Descripción</mat-header-cell>
-            <mat-cell *matCellDef="let evento"> {{evento.descripcion}} </mat-cell>
-        </ng-container>
         <ng-container matColumnDef="inicio">
             <mat-header-cell *matHeaderCellDef> Inicio</mat-header-cell>
             <mat-cell *matCellDef="let evento"> {{evento.inicio}} </mat-cell>

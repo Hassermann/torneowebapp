@@ -12,7 +12,7 @@ import { Evento } from '../model/Evento';
 })
 export class EventosComponent implements OnInit {
   eventos= new MatTableDataSource<Evento>([]); // Your data as MatTableDataSource
-  displayedColumns: string[] = ['nombre','descripcion','inicio','final','colonia','ciudad']; // Agrega más nombres de columnas según sea necesario
+  displayedColumns: string[] = ['nombre','inicio','final','colonia','ciudad']; // Agrega más nombres de columnas según sea necesario
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
