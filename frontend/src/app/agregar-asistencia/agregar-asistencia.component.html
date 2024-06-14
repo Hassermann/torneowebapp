@@ -1,0 +1,107 @@
+<div class="container text-center" style="padding-top: 10px;">
+    <h2 class="pt-4 pb-1">Registro de Asistencias</h2>
+    <div class="row" style="padding-bottom: 10px;">
+        
+        <div class="col">
+            <div class="form-group">
+   </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="text">Domingo, 16 Junio 2024 - 8:00 pm:</label>
+                <div class="col" style="text-align: center !important;" ><button type="submit" class="btn btn-primary" >Finalizar evento</button></div>
+            </div>
+        </div>
+       
+       
+    </div>  
+  
+    <div class="row" style="padding-bottom: 10px;">
+        <div class="col">
+            <div class="form-group">
+                <label for="text">Evento:</label>
+                <input type="text" class="form-control"  name="nombre" placeholder="Vatos Locos vs Terkos">
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="text">Asistente:</label>
+                <select matNativeControl class="form-control" required>
+                    <option value="nuevoleon">El fierrillos</option>
+                
+                  </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="text">Pandilla:</label>
+                <select matNativeControl class="form-control" required>
+                    <option value="nuevoleon">Lokotes Crew</option>
+                
+                  </select>
+            </div>
+        </div>
+       
+       
+    </div>  
+    
+    <hr>  
+
+    <div class="row" style="padding-top: 10px;">
+        <div class="col" style="text-align: center !important;"><button type="button" class="btn btn-warning" (click)="navigateToInicio()">Cancelar</button></div>
+        <div class="col" style="text-align: center !important;" ><button type="submit" class="btn btn-success" >Registrar</button></div>
+    </div>  
+    
+    <h2 class="pt-4 pb-1">Asistentes registrados: 12</h2>
+    <div class="row" style="padding-bottom: 10px;">
+        <mat-table [dataSource]="encuestas" class="mat-elevation-z8">
+
+            <!-- Define las columnas de la tabla -->
+            <ng-container matColumnDef="nombre">
+                <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+                <mat-cell *matCellDef="let encuesta"> {{encuesta.nombre}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="apodo">
+                <mat-header-cell *matHeaderCellDef> Apodo </mat-header-cell>
+                <mat-cell *matCellDef="let encuesta"> {{encuesta.apodo}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="pandilla">
+                <mat-header-cell *matHeaderCellDef> Pandilla </mat-header-cell>
+                <mat-cell *matCellDef="let encuesta"> {{encuesta.edad}} </mat-cell>
+            </ng-container>
+            
+            <ng-container matColumnDef="opciones">
+                <mat-header-cell *matHeaderCellDef> Ver </mat-header-cell>
+                <mat-cell *matCellDef="let encuesta"> 
+                <button mat-icon-button color="primary" >
+                    <mat-icon>visibility</mat-icon>
+                </button>
+                </mat-cell>
+              </ng-container>
+            <!-- Agrega más columnas según sea necesario -->
+    
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        
+        <dialog #dialog>
+            <div>
+              Your country:
+              <select>
+                <option value="default">Choose…</option>
+                <option>United States</option>
+                <option>France</option>
+                <option>Australia</option>
+              </select>
+            </div>
+            <div>
+              <button (click)="dialog.close()">OK</button>
+            </div>
+          </dialog>
+          
+          <button class="btn btn-primary" (click)="dialog.showModal()">Show dialog</button>
+          
+    </div> 
+
+    
+</div>

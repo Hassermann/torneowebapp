@@ -18,6 +18,9 @@ import {MatIconModule} from '@angular/material/icon';
 import { PandillasComponent } from './pandillas/pandillas.component';
 import { AgregarPandillaComponent } from './agregar-pandilla/agregar-pandilla.component';
 import { EventosComponent } from './eventos/eventos.component';
+import { AgregarEventoComponent } from './agregar-evento/agregar-evento.component';
+import { AgregarAsistenciaComponent } from './agregar-asistencia/agregar-asistencia.component';
+import { ConfirmacionAsistenciaComponent } from './confirmacion-asistencia/confirmacion-asistencia.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { EventosComponent } from './eventos/eventos.component';
     AgregarEncuestaComponent,
     PandillasComponent,
     AgregarPandillaComponent,
-    EventosComponent
+    EventosComponent,
+    AgregarEventoComponent,
+    AgregarAsistenciaComponent,
+    ConfirmacionAsistenciaComponent
   ],
   imports: [
     BrowserModule,

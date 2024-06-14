@@ -29,4 +29,8 @@ export class InicioComponent {
   navigateToEventos() {
     this.router.navigate(['/eventos']);
   }
+
+  navigateToAgregarEventos() {
+    this.router.navigate(['/agregar-eventos']);
+  }
 }
